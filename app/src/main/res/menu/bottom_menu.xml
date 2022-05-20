@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_alarm"
+        android:icon="@drawable/ic_baseline_alarm_24"
+        android:title="Alarm" />
+    <item
+        android:id="@+id/nav_notes"
+        android:icon="@drawable/ic_baseline_sticky_note_2_24"
+        android:title="Notes" />
+    <item
+        android:id="@+id/nav_weather"
+        android:icon="@drawable/ic_baseline_wb_sunny_24"
+        android:title="Weather" />
+</menu>
