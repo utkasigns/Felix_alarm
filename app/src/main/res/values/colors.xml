@@ -6,5 +6,21 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
+
     <color name="white">#FFFFFFFF</color>
+    <color name="gray">#A5A5A5</color>
+    <color name="colorMain">#A15EC5</color>
+    <color name="colorMainDark">#522768</color>
+    <color name="colorMainLight">#C49DDA</color>
+<!--    <color name="colorMain">#4BCDC1</color>-->
+<!--    <color name="colorMainDark">#0A6057</color>-->
+<!--    <color name="colorMainLight">#8ED1CA</color>-->
+    
+<!--    <color name="colorDefaultNoteColor">#4BCDC1</color>-->
+    <color name="colorNoteColor2">#FFBE3B</color>
+    <color name="colorNoteColor3">#D64A4A</color>
+    <color name="colorNoteColor4">#6C81CC</color>
+    <color name="colorNoteColor5">#00D4CD</color>
+
+
 </resources>

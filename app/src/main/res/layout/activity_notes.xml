@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".NotesActivity"
-    android:background="@color/white" >
+    android:background="@color/white"
+    tools:context=".activities.NotesActivity">
 
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -14,14 +14,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_margin="30dp"
-        android:elevation="3dp"
-        app:itemRippleColor="@android:color/transparent"
-        app:itemIconSize="30dp"
-        app:labelVisibilityMode="unlabeled"
         android:background="@drawable/rounded_corner"
+        android:elevation="3dp"
+        app:itemIconSize="30dp"
         app:itemIconTint="@drawable/item_selector"
+        app:itemRippleColor="@android:color/transparent"
+        app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
-        />
+        app:layout_constraintBottom_toBottomOf="parent"/>
+<!--        tools:ignore="MissingConstraints" />-->
 
     <TextView
         android:id="@+id/textMyNotes"
@@ -32,9 +33,11 @@
         android:layout_marginEnd="@dimen/_12sdp"
         android:fontFamily="@font/ubuntu_bold"
         android:includeFontPadding="false"
+        android:background="@color/white"
         android:text="@string/my_notes"
-        android:textColor="@color/teal_700"
-        android:textSize="@dimen/_20ssp" />
+        android:textColor="@color/colorMainDark"
+        android:textSize="@dimen/_20ssp"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <LinearLayout
         android:id="@+id/layoutSearch"
@@ -43,15 +46,15 @@
         android:layout_alignBottom="@+id/textMyNotes"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_12sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_marginEnd="@dimen/_8sdp"
-        android:layout_marginBottom="-57dp"
         android:background="@drawable/background_search"
-        android:backgroundTint="@color/teal_200"
+        android:backgroundTint="@color/colorMainLight"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         android:paddingStart="@dimen/_10sdp"
-        android:paddingEnd="@dimen/_10sdp">
+        android:paddingEnd="@dimen/_10sdp"
+        app:layout_constraintTop_toBottomOf="@id/textMyNotes" >
 
         <ImageView
             android:layout_width="@dimen/_20sdp"
@@ -63,7 +66,7 @@
         <EditText
             android:id="@+id/inputSearch"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginStart="@dimen/_12sdp"
             android:background="@null"
             android:fontFamily="@font/ubuntu_regular"
@@ -74,33 +77,63 @@
             android:inputType="text"
             android:textColor="@color/white"
             android:textColorHint="@color/white"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     </LinearLayout>
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/layoutQuickActions"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal"-->
-<!--        android:background="@color/teal_200"-->
-<!--        android:gravity="center_vertical"-->
-<!--        android:padding="@dimen/_15sdp"-->
-<!--        android:layout_alignTop="@id/bottom_navigation" >-->
 
-<!--        <ImageView-->
-<!--            android:id="@+id/imageAddNote"-->
-<!--            android:layout_width="@dimen/_23sdp"-->
-<!--            android:layout_height="@dimen/_23sdp"-->
-<!--            android:contentDescription="@string/app_name"-->
-<!--             -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/notesRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_12sdp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintTop_toBottomOf="@id/layoutSearch"
+        />
 
-<!--            />-->
-<!---->
-<!---->
-<!--    </LinearLayout>-->
+    <ImageView
+        android:id="@+id/imageAddImage"
+        android:layout_width="@dimen/_23sdp"
+        android:layout_height="@dimen/_23sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_image"
+        app:tint="@color/white"
+        android:scaleType="center"
+        android:background="@drawable/background_add_image_button"
+        app:layout_constraintBottom_toTopOf="@id/imageAddLink"
+        app:layout_constraintEnd_toEndOf="@id/imageAddNoteMain"
+        android:layout_marginBottom="@dimen/_10sdp"/>
+
+    <ImageView
+        android:id="@+id/imageAddLink"
+        android:layout_width="@dimen/_23sdp"
+        android:layout_height="@dimen/_23sdp"
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/ic_web_link"
+        app:tint="@color/white"
+        android:scaleType="center"
+        android:background="@drawable/background_add_button"
+        app:layout_constraintBottom_toTopOf="@id/imageAddNoteMain"
+        app:layout_constraintEnd_toEndOf="@id/imageAddNoteMain"
+        android:layout_marginBottom="@dimen/_10sdp"/>
 
 
+    <ImageView
+        android:id="@+id/imageAddNoteMain"
+        android:layout_width="@dimen/_40sdp"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/background_add_button"
+        android:contentDescription="@string/app_name"
+        android:padding="@dimen/_5sdp"
+        android:src="@drawable/ic_create"
+        app:tint="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent" />
 
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
