@@ -48,7 +48,9 @@ public class NotesActivity extends AppCompatActivity {
                         REQUEST_CODE_ADD_NOTE
                 );
             }
+
         });
+
 
         notesRecyclerView = findViewById(R.id.notesRecyclerView);
         notesRecyclerView.setLayoutManager(
