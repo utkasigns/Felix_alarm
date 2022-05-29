@@ -1,13 +1,26 @@
 package com.example.felixalarm.activities;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.UriMatcher;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,7 +33,12 @@ import com.example.felixalarm.database.NotesDatabase;
 import com.example.felixalarm.entities.Note;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.squareup.picasso.Picasso;
+import com.theartofdev.edmodo.cropper.CropImage;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -34,10 +52,43 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     private String selectedNoteColor;
 
+    private ImageView imageNote;
+    private LinearLayout layoutAddImage;
+    private static final int CAMERA_REQUEST=100;
+    private static final int STORAGE_REQUEST=101;
+
+    String cameraPermission[];
+    String storagePermission[];
+
+    private static final int PICK_IMAGE = 1;
+    Uri imageUri;
+
+    private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
+
+        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
+        imageNote = (ImageView)findViewById(R.id.imageNote);
+        layoutAddImage = findViewById(R.id.layoutAddImage);
+
+        layoutAddImage.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+
+                startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE);
+
+            }
+        });
 
         ImageView imageBack = findViewById(R.id.imageBack);
         imageBack.setOnClickListener(new View.OnClickListener() {
@@ -72,6 +123,134 @@ public class CreateNoteActivity extends AppCompatActivity {
         setSubtitleIndicatorColor();
 
     }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+//            imageUri = data.getData();
+////                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
+////                imageNote.setImageBitmap(bitmap);
+//            imageNote.setImageURI(imageUri);
+
+            try {
+                InputStream inputStream = getContentResolver().openInputStream(data.getData());
+
+                Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+
+                imageNote.setImageBitmap(bitmap);
+
+//                imageNote.se;
+
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+
+        }
+    }
+
+    //
+
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+//    private void requestStoragePermission() {
+//        requestPermissions(storagePermission, STORAGE_REQUEST);
+//    }
+//
+//    private boolean checkStoragePermission() {
+//        boolean result = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                == (PackageManager.PERMISSION_GRANTED);
+//        return result;
+//    }
+
+
+    //
+    private void pickFromGallery() {
+//        CropImage.activity().start(this);
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType("image/*");
+        startActivityForResult(intent, CAMERA_REQUEST);
+    }
+
+    //
+//    @RequiresApi(api = Build.VERSION_CODES.M)
+//    private void requestCameraPermission() {
+//        requestPermissions(cameraPermission, CAMERA_REQUEST);
+//    }
+//
+//    private boolean checkCameraPermission() {
+//        boolean result = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.CAMERA)
+//                == (PackageManager.PERMISSION_GRANTED);
+//        boolean result1 = ContextCompat.checkSelfPermission(this,
+//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
+//                == (PackageManager.PERMISSION_GRANTED);
+//        return result && result1;
+//    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        switch (requestCode) {
+            case CAMERA_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean camera_accepted = grantResults[0] ==
+                            (PackageManager.PERMISSION_GRANTED);
+                    boolean storage_accepted = grantResults[1] ==
+                            (PackageManager.PERMISSION_GRANTED);
+                    if (camera_accepted && storage_accepted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "Please enable camera and storage usage permissions", Toast.LENGTH_LONG);
+                    }
+                }
+            }
+            break;
+            case STORAGE_REQUEST: {
+                if (grantResults.length > 0) {
+                    boolean storage_accepted = grantResults[0] ==
+                            (PackageManager.PERMISSION_GRANTED);
+                    if (storage_accepted) {
+                        pickFromGallery();
+                    } else {
+                        Toast.makeText(this, "Please enable storage permission", Toast.LENGTH_LONG).show();
+                    }
+                }
+            }
+            break;
+        }
+        //это по полному тутору по заметкам
+//        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
+//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                pickFromGallery();
+//            } else {
+//                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_LONG);
+//            }
+//        }
+    }
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+//            if (resultCode == RESULT_OK) {
+//                Uri resultUri = result.getUri();
+//                Picasso.with(this).load(resultUri).into(imageNote);
+//                try {
+//                    InputStream stream = getContentResolver().openInputStream(resultUri);
+//                    Bitmap bitmap = BitmapFactory.decodeStream(stream);
+//                    imageNote.setImageBitmap(bitmap);
+//                } catch (Exception e) {
+//                    e.printStackTrace();
+//                }
+//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
+//                Exception error = result.getError();
+//            }
+//        }
+//
+//
+//    }
 
     private void saveNote() {
         if(inputNoteTitle.getText().toString().trim().isEmpty()) {
@@ -201,11 +380,31 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
+        //тоже по тому тутору, ниче не получается
+//        layoutMiscellaneous.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+//                if (ContextCompat.checkSelfPermission(
+//                        getApplicationContext(),Manifest.permission.READ_EXTERNAL_STORAGE
+//                ) != PackageManager.PERMISSION_GRANTED) {
+//                    ActivityCompat.requestPermissions(
+//                            CreateNoteActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+//                            REQUEST_CODE_STORAGE_PERMISSION
+//                    );
+//                }else {
+//                    pickFromGallery();
+//                }
+//            }
+//        });
+
     }
 
     private void setSubtitleIndicatorColor() {
         GradientDrawable gradientDrawable = (GradientDrawable) viewSubtitleIndicator.getBackground();
         gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
     }
+
+
 
 }
