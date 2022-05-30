@@ -59,51 +59,53 @@ public class CreateNoteActivity extends AppCompatActivity {
     private View viewSubtitleIndicator;
     private TextView textWebURL;
     private LinearLayout layoutWebURL;
+    private ImageView imageNote;
 
     private String selectedNoteColor;
     private String selectedImagePath;
 
-    private ImageView imageNote;
     private LinearLayout layoutAddImage;
-    private static final int CAMERA_REQUEST=100;
-    private static final int STORAGE_REQUEST=101;
+//    private static final int CAMERA_REQUEST=100;
+//    private static final int STORAGE_REQUEST=101;
 
     private AlertDialog dialogAddURL;
 
     private Note alreadyAvailableNote;
 
-    String cameraPermission[];
-    String storagePermission[];
+//    String cameraPermission[];
+//    String storagePermission[];
 
     private static final int PICK_IMAGE = 1;
     Uri imageUri;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
+    private static final int REQUEST_CODE_SELECT_IMAGE = 2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
-        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        //по тому умному тутору, в котором куча функций, но это не работало итак, надо или фиксить или убирать
+//        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+//        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
         imageNote = (ImageView)findViewById(R.id.imageNote);
-        layoutAddImage = findViewById(R.id.layoutAddImage);
 
-        layoutAddImage.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.M)
-            @Override
-            public void onClick(View view) {
-
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-
-                startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE);
-
-            }
-        });
+//        layoutAddImage = findViewById(R.id.layoutAddImage);
+//        layoutAddImage.setOnClickListener(new View.OnClickListener() {
+//            @RequiresApi(api = Build.VERSION_CODES.M)
+//            @Override
+//            public void onClick(View view) {
+//
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//
+//                startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE);
+//
+//            }
+//        }); до этого работало, сейчас пробую по тому фулл тутору, если что верну, а хули
 
         ImageView imageBack = findViewById(R.id.imageBack);
         imageBack.setOnClickListener(new View.OnClickListener() {
@@ -118,6 +120,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         inputNoteText = findViewById(R.id.inputNote);
         textDateTime = findViewById(R.id.textDateTime);
         viewSubtitleIndicator = findViewById(R.id.viewSubtitleIndicator);
+        imageNote = findViewById(R.id.imageNote);
         textWebURL = findViewById(R.id.textWebURL);
         layoutWebURL = findViewById(R.id.layoutWebURL);
 
@@ -165,40 +168,40 @@ public class CreateNoteActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-            if(data != null) {
-                Uri selectedImageUri = data.getData();
-                if (selectedImageUri != null) {
-                    try {
-                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
-
-                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-
-                        imageNote.setImageBitmap(bitmap);
-                        imageNote.setVisibility(View.VISIBLE);
-                        findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
-
-              // повний тутор(оф щіт) //selectedImagePath = getPathFromUri(selectedImageUri);
-
-//                startActivityForResult(new Intent(getApplicationContext(), CreateNoteActivity.class),
-//                        REQUEST_CODE_ADD_NOTE );
-//                imageNote.se;
-
-                    } catch (FileNotFoundException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+//            if(data != null) {
+//                Uri selectedImageUri = data.getData();
+//                if (selectedImageUri != null) {
+//                    try {
+//                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
+//
+//                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+//
+//                        imageNote.setImageBitmap(bitmap);
+//                        imageNote.setVisibility(View.VISIBLE);
+//                        findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
+//
+//              // повний тутор(оф щіт) //selectedImagePath = getPathFromUri(selectedImageUri);
+//
+////                startActivityForResult(new Intent(getApplicationContext(), CreateNoteActivity.class),
+////                        REQUEST_CODE_ADD_NOTE );
+////                imageNote.se;
+//
+//                    } catch (FileNotFoundException e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            }
 //            imageUri = data.getData();
 ////                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
 ////                imageNote.setImageBitmap(bitmap);
 //            imageNote.setImageURI(imageUri);
-        }
+//        }
 
-    }
+//    }
 
     //знов ця фігня по повному тутору, не працює
 //    private String getPathFromUri(Uri contentUri) {
@@ -231,13 +234,13 @@ public class CreateNoteActivity extends AppCompatActivity {
 //    }
 
 
-    //
-    private void pickFromGallery() {
-//        CropImage.activity().start(this);
-        Intent intent = new Intent(Intent.ACTION_PICK);
-        intent.setType("image/*");
-        startActivityForResult(intent, CAMERA_REQUEST);
-    }
+    //опять тот умный тутор. отчасти работал, если что верну
+//    private void pickFromGallery() {
+////        CropImage.activity().start(this);
+//        Intent intent = new Intent(Intent.ACTION_PICK);
+//        intent.setType("image/*");
+//        startActivityForResult(intent, CAMERA_REQUEST);
+//    }
 
     //
 //    @RequiresApi(api = Build.VERSION_CODES.M)
@@ -255,37 +258,42 @@ public class CreateNoteActivity extends AppCompatActivity {
 //        return result && result1;
 //    }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        switch (requestCode) {
-            case CAMERA_REQUEST: {
-                if (grantResults.length > 0) {
-                    boolean camera_accepted = grantResults[0] ==
-                            (PackageManager.PERMISSION_GRANTED);
-                    boolean storage_accepted = grantResults[1] ==
-                            (PackageManager.PERMISSION_GRANTED);
-                    if (camera_accepted && storage_accepted) {
-                        pickFromGallery();
-                    } else {
-                        Toast.makeText(this, "Please enable camera and storage usage permissions", Toast.LENGTH_LONG);
-                    }
-                }
-            }
-            break;
-            case STORAGE_REQUEST: {
-                if (grantResults.length > 0) {
-                    boolean storage_accepted = grantResults[0] ==
-                            (PackageManager.PERMISSION_GRANTED);
-                    if (storage_accepted) {
-                        pickFromGallery();
-                    } else {
-                        Toast.makeText(this, "Please enable storage permission", Toast.LENGTH_LONG).show();
-                    }
-                }
-            }
-            break;
-        }
+
+    //тутор с кучей функций, я так непониамю отчасти работало
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+//        switch (requestCode) {
+//            case CAMERA_REQUEST: {
+//                if (grantResults.length > 0) {
+//                    boolean camera_accepted = grantResults[0] ==
+//                            (PackageManager.PERMISSION_GRANTED);
+//                    boolean storage_accepted = grantResults[1] ==
+//                            (PackageManager.PERMISSION_GRANTED);
+//                    if (camera_accepted && storage_accepted) {
+//                        pickFromGallery();
+//                    } else {
+//                        Toast.makeText(this, "Please enable camera and storage usage permissions", Toast.LENGTH_LONG);
+//                    }
+//                }
+//            }
+//            break;
+//            case STORAGE_REQUEST: {
+//                if (grantResults.length > 0) {
+//                    boolean storage_accepted = grantResults[0] ==
+//                            (PackageManager.PERMISSION_GRANTED);
+//                    if (storage_accepted) {
+//                        pickFromGallery();
+//                    } else {
+//                        Toast.makeText(this, "Please enable storage permission", Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//            }
+//            break;
+//        }
+
+
+
         //это по полному тутору по заметкам
 //        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
 //            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -294,7 +302,7 @@ public class CreateNoteActivity extends AppCompatActivity {
 //                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_LONG);
 //            }
 //        }
-    }
+//    }
 
 //    @Override
 //    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -355,6 +363,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         note.setNoteText(inputNoteText.getText().toString());
         note.setDateTime(textDateTime.getText().toString());
         note.setColor(selectedNoteColor);
+        note.setImagePath(selectedImagePath);
 
         if (layoutWebURL.getVisibility() == View.VISIBLE) {
             note.setWebLink(textWebURL.getText().toString());
@@ -474,6 +483,25 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         });
 
+        layoutMiscellaneous.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                if (ContextCompat.checkSelfPermission(
+                        getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE)
+                 != PackageManager.PERMISSION_GRANTED) {
+                    ActivityCompat.requestPermissions(
+                            CreateNoteActivity.this,
+                            new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                            REQUEST_CODE_STORAGE_PERMISSION
+                    );
+                }else {
+                    selectImage();
+                }
+
+            }
+        });
+
         if (alreadyAvailableNote != null && alreadyAvailableNote.getColor() != null && alreadyAvailableNote.getColor().trim().isEmpty()) {
             switch (alreadyAvailableNote.getColor()) {
                 case "#FFBE3B":
@@ -522,6 +550,66 @@ public class CreateNoteActivity extends AppCompatActivity {
     private void setSubtitleIndicatorColor() {
         GradientDrawable gradientDrawable = (GradientDrawable) viewSubtitleIndicator.getBackground();
         gradientDrawable.setColor(Color.parseColor(selectedNoteColor));
+    }
+
+    private void selectImage() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            intent.setType("image/*");
+            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+        }
+
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length >0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                selectImage();
+            } else {
+                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
+            if (data != null) {
+                Uri selectedImageUri= data.getData();
+                if (selectedImageUri != null) {
+                    try {
+
+                        InputStream inputStream = getContentResolver().openInputStream(selectedImageUri);
+                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                        imageNote.setImageBitmap(bitmap);
+                        imageNote.setVisibility(View.VISIBLE);
+
+                        selectedImagePath = getPathFromUri(selectedImageUri);
+
+                    } catch (Exception exception) {
+                        Toast.makeText(this, exception.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }
+    }
+
+    private String getPathFromUri(Uri contentUri) {
+        String filePath;
+        Cursor cursor= getContentResolver()
+                .query(contentUri, null, null, null, null);
+        if (cursor == null) {
+            filePath = contentUri.getPath();
+        } else {
+            cursor.moveToFirst();
+            int index = cursor.getColumnIndex("_data");
+            filePath = cursor.getString(index);
+            cursor.close();
+        }
+        return filePath;
     }
 
     private void showAddURLDialog() {
