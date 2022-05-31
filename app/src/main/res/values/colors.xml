@@ -22,5 +22,7 @@
     <color name="colorNoteColor4">#6C81CC</color>
     <color name="colorNoteColor5">#00D4CD</color>
 
+    <color name="colorDelete">#FF8787</color>
+
 
 </resources>

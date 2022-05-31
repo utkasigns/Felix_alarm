@@ -34,7 +34,8 @@
         <entry key="app/src/main/res/layout/activity_weather.xml" value="0.12537993920972645" />
         <entry key="app/src/main/res/layout/item_container_note.xml" value="0.1037037037037037" />
         <entry key="app/src/main/res/layout/layout_add_url.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/layout_miscellaneous.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/layout_delete_note.xml" value="0.18328541960720507" />
+        <entry key="app/src/main/res/layout/layout_miscellaneous.xml" value="0.19183688503756147" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.25" />
       </map>
     </option>

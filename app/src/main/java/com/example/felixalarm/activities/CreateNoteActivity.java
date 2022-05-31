@@ -52,8 +52,7 @@ import java.util.regex.Pattern;
 
 public class CreateNoteActivity extends AppCompatActivity {
 
-
-    private static final int REQUEST_CODE_ADD_NOTE = 1;
+//    private static final int REQUEST_CODE_ADD_NOTE = 1;
     private EditText inputNoteTitle, inputNoteSubtitle, inputNoteText;
     private TextView textDateTime;
     private View viewSubtitleIndicator;
@@ -64,19 +63,14 @@ public class CreateNoteActivity extends AppCompatActivity {
     private String selectedNoteColor;
     private String selectedImagePath;
 
-    private LinearLayout layoutAddImage;
-//    private static final int CAMERA_REQUEST=100;
-//    private static final int STORAGE_REQUEST=101;
+//    private LinearLayout layoutAddImage;
 
     private AlertDialog dialogAddURL;
+    private AlertDialog dialogDeleteNote;
 
     private Note alreadyAvailableNote;
 
-//    String cameraPermission[];
-//    String storagePermission[];
-
-    private static final int PICK_IMAGE = 1;
-    Uri imageUri;
+//    private static final int PICK_IMAGE = 1;
 
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
@@ -86,26 +80,7 @@ public class CreateNoteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_note);
 
-        //по тому умному тутору, в котором куча функций, но это не работало итак, надо или фиксить или убирать
-//        cameraPermission = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
-//        storagePermission = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE};
-
         imageNote = (ImageView)findViewById(R.id.imageNote);
-
-//        layoutAddImage = findViewById(R.id.layoutAddImage);
-//        layoutAddImage.setOnClickListener(new View.OnClickListener() {
-//            @RequiresApi(api = Build.VERSION_CODES.M)
-//            @Override
-//            public void onClick(View view) {
-//
-//                Intent intent = new Intent();
-//                intent.setType("image/*");
-//                intent.setAction(Intent.ACTION_GET_CONTENT);
-//
-//                startActivityForResult(Intent.createChooser(intent,"Select Picture"), PICK_IMAGE);
-//
-//            }
-//        }); до этого работало, сейчас пробую по тому фулл тутору, если что верну, а хули
 
         ImageView imageBack = findViewById(R.id.imageBack);
         imageBack.setOnClickListener(new View.OnClickListener() {
@@ -167,164 +142,6 @@ public class CreateNoteActivity extends AppCompatActivity {
         setSubtitleIndicatorColor();
 
     }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
-//            if(data != null) {
-//                Uri selectedImageUri = data.getData();
-//                if (selectedImageUri != null) {
-//                    try {
-//                        InputStream inputStream = getContentResolver().openInputStream(data.getData());
-//
-//                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
-//
-//                        imageNote.setImageBitmap(bitmap);
-//                        imageNote.setVisibility(View.VISIBLE);
-//                        findViewById(R.id.imageRemoveImage).setVisibility(View.VISIBLE);
-//
-//              // повний тутор(оф щіт) //selectedImagePath = getPathFromUri(selectedImageUri);
-//
-////                startActivityForResult(new Intent(getApplicationContext(), CreateNoteActivity.class),
-////                        REQUEST_CODE_ADD_NOTE );
-////                imageNote.se;
-//
-//                    } catch (FileNotFoundException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//            imageUri = data.getData();
-////                            Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(),imageUri);
-////                imageNote.setImageBitmap(bitmap);
-//            imageNote.setImageURI(imageUri);
-//        }
-
-//    }
-
-    //знов ця фігня по повному тутору, не працює
-//    private String getPathFromUri(Uri contentUri) {
-//        String filePath;
-//        Cursor cursor = getContentResolver().query(contentUri,null,null,null,null);
-//        if (cursor == null) {
-//            filePath = contentUri.getPath();
-//        } else {
-//            cursor.moveToFirst();
-//            int index = cursor.getColumnIndex("_data");
-//            filePath = cursor.getString(index);
-//            cursor.close();
-//        }
-//        return filePath;
-//    }
-
-
-    //
-
-//    @RequiresApi(api = Build.VERSION_CODES.M)
-//    private void requestStoragePermission() {
-//        requestPermissions(storagePermission, STORAGE_REQUEST);
-//    }
-//
-//    private boolean checkStoragePermission() {
-//        boolean result = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                == (PackageManager.PERMISSION_GRANTED);
-//        return result;
-//    }
-
-
-    //опять тот умный тутор. отчасти работал, если что верну
-//    private void pickFromGallery() {
-////        CropImage.activity().start(this);
-//        Intent intent = new Intent(Intent.ACTION_PICK);
-//        intent.setType("image/*");
-//        startActivityForResult(intent, CAMERA_REQUEST);
-//    }
-
-    //
-//    @RequiresApi(api = Build.VERSION_CODES.M)
-//    private void requestCameraPermission() {
-//        requestPermissions(cameraPermission, CAMERA_REQUEST);
-//    }
-//
-//    private boolean checkCameraPermission() {
-//        boolean result = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.CAMERA)
-//                == (PackageManager.PERMISSION_GRANTED);
-//        boolean result1 = ContextCompat.checkSelfPermission(this,
-//                Manifest.permission.WRITE_EXTERNAL_STORAGE)
-//                == (PackageManager.PERMISSION_GRANTED);
-//        return result && result1;
-//    }
-
-
-    //тутор с кучей функций, я так непониамю отчасти работало
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        switch (requestCode) {
-//            case CAMERA_REQUEST: {
-//                if (grantResults.length > 0) {
-//                    boolean camera_accepted = grantResults[0] ==
-//                            (PackageManager.PERMISSION_GRANTED);
-//                    boolean storage_accepted = grantResults[1] ==
-//                            (PackageManager.PERMISSION_GRANTED);
-//                    if (camera_accepted && storage_accepted) {
-//                        pickFromGallery();
-//                    } else {
-//                        Toast.makeText(this, "Please enable camera and storage usage permissions", Toast.LENGTH_LONG);
-//                    }
-//                }
-//            }
-//            break;
-//            case STORAGE_REQUEST: {
-//                if (grantResults.length > 0) {
-//                    boolean storage_accepted = grantResults[0] ==
-//                            (PackageManager.PERMISSION_GRANTED);
-//                    if (storage_accepted) {
-//                        pickFromGallery();
-//                    } else {
-//                        Toast.makeText(this, "Please enable storage permission", Toast.LENGTH_LONG).show();
-//                    }
-//                }
-//            }
-//            break;
-//        }
-
-
-
-        //это по полному тутору по заметкам
-//        if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
-//            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                pickFromGallery();
-//            } else {
-//                Toast.makeText(this, "Permission Denied!", Toast.LENGTH_LONG);
-//            }
-//        }
-//    }
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-//            CropImage.ActivityResult result = CropImage.getActivityResult(data);
-//            if (resultCode == RESULT_OK) {
-//                Uri resultUri = result.getUri();
-//                Picasso.with(this).load(resultUri).into(imageNote);
-//                try {
-//                    InputStream stream = getContentResolver().openInputStream(resultUri);
-//                    Bitmap bitmap = BitmapFactory.decodeStream(stream);
-//                    imageNote.setImageBitmap(bitmap);
-//                } catch (Exception e) {
-//                    e.printStackTrace();
-//                }
-//            } else if (resultCode == CropImage.CROP_IMAGE_ACTIVITY_RESULT_ERROR_CODE) {
-//                Exception error = result.getError();
-//            }
-//        }
-//    }
-
 
     private void setViewOrUpdateNote() {
         inputNoteTitle.setText(alreadyAvailableNote.getTitle());
@@ -519,24 +336,6 @@ public class CreateNoteActivity extends AppCompatActivity {
             }
         }
 
-        //тоже по тому тутору, ниче не получается
-//        layoutMiscellaneous.findViewById(R.id.layoutAddImage).setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
-//                if (ContextCompat.checkSelfPermission(
-//                        getApplicationContext(),Manifest.permission.READ_EXTERNAL_STORAGE
-//                ) != PackageManager.PERMISSION_GRANTED) {
-//                    ActivityCompat.requestPermissions(
-//                            CreateNoteActivity.this, new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
-//                            REQUEST_CODE_STORAGE_PERMISSION
-//                    );
-//                }else {
-//                    pickFromGallery();
-//                }
-//            }
-//        });
-
         layoutMiscellaneous.findViewById(R.id.layoutAddUrl).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -544,6 +343,70 @@ public class CreateNoteActivity extends AppCompatActivity {
                 showAddURLDialog();
             }
         });
+
+        if (alreadyAvailableNote != null) {
+            layoutMiscellaneous.findViewById(R.id.layoutDeleteNote).setVisibility(View.VISIBLE);
+            layoutMiscellaneous.findViewById(R.id.layoutDeleteNote).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                    showDeleteNoteDialog();
+                }
+            });
+        }
+    }
+
+    private void showDeleteNoteDialog() {
+
+        if (dialogDeleteNote == null) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(CreateNoteActivity.this);
+            View view = LayoutInflater.from(this).inflate(
+                    R.layout.layout_delete_note,
+                    (ViewGroup) findViewById(R.id.layoutDeleteNoteContainer)
+            );
+            builder.setView(view);
+            dialogDeleteNote = builder.create();
+            if (dialogDeleteNote.getWindow() != null) {
+                dialogDeleteNote.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+            view.findViewById(R.id.textDeleteNote).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    @SuppressLint("StaticFieldLeak")
+                    class DeleteNoteTask extends AsyncTask<Void, Void, Void> {
+
+                        @Override
+                        protected Void doInBackground(Void... voids) {
+                            NotesDatabase.getDatabase(getApplicationContext()).noteDao()
+                                    .deleteNote(alreadyAvailableNote);
+                            return null;
+                        }
+
+                        @Override
+                        protected void onPostExecute(Void unused) {
+                            super.onPostExecute(unused);
+                            Intent intent = new Intent();
+                            intent.putExtra("isNoteDeleted", true);
+                            setResult(RESULT_OK, intent);
+                            finish();
+                        }
+                    }
+
+                    new DeleteNoteTask().execute();
+
+                }
+            });
+
+            view.findViewById(R.id.textCancel).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialogDeleteNote.dismiss();
+                }
+            });
+        }
+
+        dialogDeleteNote.show();
 
     }
 
