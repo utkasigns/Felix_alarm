@@ -46,7 +46,7 @@
         android:layout_alignBottom="@+id/textMyNotes"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="@dimen/_8sdp"
-        android:layout_marginTop="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
         android:layout_marginEnd="@dimen/_8sdp"
         android:background="@drawable/background_search"
         android:backgroundTint="@color/colorMainLight"
@@ -88,52 +88,53 @@
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingStart="0dp"
+        android:layout_marginTop="@dimen/_10sdp"
         android:paddingEnd="@dimen/_12sdp"
         android:paddingBottom="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintTop_toBottomOf="@id/layoutSearch"
         />
 
-    <ImageView
-        android:id="@+id/imageAddImage"
-        android:layout_width="@dimen/_23sdp"
-        android:layout_height="@dimen/_23sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_image"
-        app:tint="@color/white"
-        android:scaleType="center"
-        android:background="@drawable/background_add_image_button"
-        app:layout_constraintBottom_toTopOf="@id/imageAddLink"
-        app:layout_constraintEnd_toEndOf="@id/imageAddNoteMain"
-        android:layout_marginBottom="@dimen/_10sdp"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageAddImage"-->
+<!--        android:layout_width="@dimen/_23sdp"-->
+<!--        android:layout_height="@dimen/_23sdp"-->
+<!--        android:contentDescription="@string/app_name"-->
+<!--        android:src="@drawable/ic_image"-->
+<!--        app:tint="@color/white"-->
+<!--        android:scaleType="center"-->
+<!--        android:background="@drawable/background_add_image_button"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/imageAddLink"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/imageAddNoteMain"-->
+<!--        android:layout_marginBottom="@dimen/_10sdp"/>-->
 
-    <ImageView
-        android:id="@+id/imageAddLink"
-        android:layout_width="@dimen/_23sdp"
-        android:layout_height="@dimen/_23sdp"
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/ic_web_link"
-        app:tint="@color/white"
-        android:scaleType="center"
-        android:background="@drawable/background_add_button"
-        app:layout_constraintBottom_toTopOf="@id/imageAddNoteMain"
-        app:layout_constraintEnd_toEndOf="@id/imageAddNoteMain"
-        android:layout_marginBottom="@dimen/_10sdp"/>
+<!--    <ImageView-->
+<!--        android:id="@+id/imageAddLink"-->
+<!--        android:layout_width="@dimen/_23sdp"-->
+<!--        android:layout_height="@dimen/_23sdp"-->
+<!--        android:contentDescription="@string/app_name"-->
+<!--        android:src="@drawable/ic_web_link"-->
+<!--        app:tint="@color/white"-->
+<!--        android:scaleType="center"-->
+<!--        android:background="@drawable/background_add_button"-->
+<!--        app:layout_constraintBottom_toTopOf="@id/imageAddNoteMain"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/imageAddNoteMain"-->
+<!--        android:layout_marginBottom="@dimen/_10sdp"/>-->
 
 
     <ImageView
         android:id="@+id/imageAddNoteMain"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
-        android:layout_marginEnd="@dimen/_30sdp"
+        android:layout_width="@dimen/_55sdp"
+        android:layout_height="@dimen/_55sdp"
         android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginEnd="-10dp"
         android:background="@drawable/background_add_button"
         android:contentDescription="@string/app_name"
         android:padding="@dimen/_5sdp"
-        android:src="@drawable/ic_create"
+        android:src="@drawable/ic_add_outline"
         app:tint="@color/white"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="@id/bottom_navigation" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
