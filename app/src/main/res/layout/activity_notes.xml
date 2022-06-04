@@ -124,17 +124,25 @@
 
     <ImageView
         android:id="@+id/imageAddNoteMain"
-        android:layout_width="@dimen/_55sdp"
+        android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_55sdp"
         android:layout_marginBottom="@dimen/_10sdp"
         android:layout_marginEnd="-10dp"
-        android:background="@drawable/background_add_button"
+        android:background="@drawable/kitty_icon"
         android:contentDescription="@string/app_name"
-        android:padding="@dimen/_5sdp"
+        android:paddingStart="@dimen/_12sdp"
+        android:paddingTop="@dimen/_12sdp"
+        android:paddingEnd="@dimen/_12sdp"
+        android:paddingBottom="@dimen/_4ssp"
         android:src="@drawable/ic_add_outline"
-        app:tint="@color/white"
+        android:scaleType="fitCenter"
+
+        app:tint="#FFBE3B"
         app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
         app:layout_constraintEnd_toEndOf="@id/bottom_navigation" />
+
+<!--    #FFBE3B желтенький-->
+<!--    Аня, привет :3-->
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
