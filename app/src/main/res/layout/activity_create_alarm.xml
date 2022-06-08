@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    tools:context=".activities.CreateAlarmActivity">
+
+    <TextView
+        android:id="@+id/timer1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:drawable/editbox_background"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:hint="@string/timeButton"
+        android:textSize="32sp"
+        app:drawableTopCompat="@drawable/ic_time" />
+
+    <TextView
+        android:id="@+id/timer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:background="@android:drawable/editbox_background"
+        android:drawablePadding="16dp"
+        android:gravity="center"
+        android:hint="@string/timeButton"
+        android:textSize="32sp"
+        app:drawableTopCompat="@drawable/ic_time"/>
+
+</LinearLayout>
