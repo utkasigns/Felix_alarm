@@ -13,6 +13,8 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class MainActivity extends AppCompatActivity {
 
+    //привет, тест в 2 ночи, ура
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
