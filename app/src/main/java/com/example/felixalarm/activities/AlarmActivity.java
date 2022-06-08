@@ -2,22 +2,70 @@ package com.example.felixalarm.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.adapters.NotesAdapter;
+import com.example.felixalarm.entities.Note;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
-public class AlarmActivity extends AppCompatActivity {
+import java.util.ArrayList;
+import java.util.List;
+
+public class AlarmActivity extends AppCompatActivity  {
+    public static final int REQUEST_CODE_ADD_ALARM = 1;
+    public static final int REQUEST_CODE_UPDATE_ALARM = 2;
+    public static final int REQUEST_CODE_SHOW_ALARMS = 3;
+
+    private RecyclerView alarmsRecyclerView;
+    private List<Note> alarmList;
+    AlarmClock alarmClock;
+    int hours,minutes;
+
+    private int alarmClickedPosition = -1;
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+
+        ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
+        imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(
+                        new Intent(getApplicationContext(), CreateAlarmActivity.class),
+                        REQUEST_CODE_ADD_ALARM
+//
+//                        new Intent(AlarmClock.ACTION_SET_ALARM);
+//                 i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+//                 i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+//                 i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+//                 startActivity(i);
+//                 );
+//            }
+
+
+//        alarmsRecyclerView = findViewById(R.id.alarmRecyclerView);
+//        alarmsRecyclerView.setLayoutManager(
+//                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
+        );
+
+        alarmList = new ArrayList<>();
+
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_alarm);
@@ -39,9 +87,27 @@ public class AlarmActivity extends AppCompatActivity {
                 }
                 return false;
             }
+        });}
         });
-    }
-}
+    }}
+
+//        @Override
+//        public void onAlarmClicked (Alarm alarm,int position){
+//            alarmClickedPosition = position;
+//            Intent intent = new Intent(getApplicationContext(), CreateAlarmActivity.class);
+//            intent.putExtra("isViewOrUpdate", true);
+//            intent.putExtra("alarm",alarm);
+//            startActivityForResult(intent, REQUEST_CODE_UPDATE_ALARM);
+//        }
+
+
+
+
+
+
+
+
+
 
 //        bottomNavigationView = findViewById(R.id.bottom_navigation);
 //        View itemAlarm = findViewById(R.id.nav_alarm);
@@ -71,10 +137,10 @@ public class AlarmActivity extends AppCompatActivity {
 //        Intent intent = new Intent(this, AlarmActivity.class);
 //        startActivity(intent);}
 //    public void openNotesActivity() {
-//        Intent intent = new Intent(this, NotesActivity.class);
-//        startActivity(intent);}
+////        Intent intent = new Intent(this, NotesActivity.class);
+////        startActivity(intent);}
 //    public void openWeatherActivity() {
 //        Intent intent = new Intent(this, WeatherActivity.class);
 //        startActivity(intent);}
 //    }
-//}
+//}});
