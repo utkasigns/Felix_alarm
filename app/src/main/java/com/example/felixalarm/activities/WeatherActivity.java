@@ -42,37 +42,3 @@ public class WeatherActivity extends AppCompatActivity {
         });
     }
 }
-
-//        View itemAlarm = findViewById(R.id.nav_alarm);
-//        View itemNotes = findViewById(R.id.nav_notes);
-//        View itemWeather = findViewById(R.id.nav_weather);
-//
-//        itemAlarm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openAlarmActivity();
-//            }
-//        });
-//        itemNotes.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openNotesActivity();
-//            }
-//        });
-//        itemWeather.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                openWeatherActivity();
-//            }
-//        });
-//    }
-//    public void openAlarmActivity() {
-//        Intent intent = new Intent(this, AlarmActivity.class);
-//        startActivity(intent);}
-//    public void openNotesActivity() {
-//        Intent intent = new Intent(this, NotesActivity.class);
-//        startActivity(intent);}
-//    public void openWeatherActivity() {
-//        Intent intent = new Intent(this, WeatherActivity.class);
-//        startActivity(intent);}
-//

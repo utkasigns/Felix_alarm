@@ -18,6 +18,7 @@
         <entry key="app/src/main/res/drawable/background_note_color_5.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_search.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_subtitle_indicator.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/card_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_add_outline.xml" value="0.25462962962962965" />
         <entry key="app/src/main/res/drawable/ic_alarm.xml" value="0.25462962962962965" />
         <entry key="app/src/main/res/drawable/ic_create.xml" value="0.18185654008438817" />
@@ -31,9 +32,10 @@
         <entry key="app/src/main/res/layout/activity_create_alarm.xml" value="0.10106382978723404" />
         <entry key="app/src/main/res/layout/activity_create_note.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_notes.xml" value="0.2109375" />
-        <entry key="app/src/main/res/layout/activity_weather.xml" value="0.12537993920972645" />
+        <entry key="app/src/main/res/layout/activity_notes.xml" value="0.16075368878576243" />
+        <entry key="app/src/main/res/layout/activity_weather.xml" value="0.18925105128620284" />
         <entry key="app/src/main/res/layout/item_container_note.xml" value="0.1037037037037037" />
+        <entry key="app/src/main/res/layout/item_weather.xml" value="0.3286151321935845" />
         <entry key="app/src/main/res/layout/layout_add_url.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_delete_note.xml" value="0.18328541960720507" />
         <entry key="app/src/main/res/layout/layout_miscellaneous.xml" value="0.19183688503756147" />
