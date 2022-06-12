@@ -4,8 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/layoutHome"
     tools:context=".activities.WeatherActivity"
-    android:background="@color/purple_200" >
+    android:background="@color/white" >
+
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:adjustViewBounds="false"
+        android:src="@drawable/rain_gif"
+        android:alpha="0.5"
+        app:layout_constraintStart_toStartOf="@id/layoutHome"
+        app:layout_constraintEnd_toEndOf="@id/layoutHome"/>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation"
@@ -23,15 +33,17 @@
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
-    <ImageView
-    android:id="@+id/imageBackgroundBack"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:scaleType="centerCrop"
-    android:src="@color/white"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintStart_toStartOf="parent"
-    />
+<!--    это если на фоне картинка, а не гифка-->
+<!--    <ImageView-->
+<!--    android:id="@+id/imageBackgroundBack"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:scaleType="centerCrop"-->
+<!--    android:src="@color/white"-->
+<!--    app:layout_constraintEnd_toEndOf="parent"-->
+<!--    app:layout_constraintStart_toStartOf="parent"-->
+<!--    />-->
+
 
     <TextView
         android:id="@+id/textCityName"
