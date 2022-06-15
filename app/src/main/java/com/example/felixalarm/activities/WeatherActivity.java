@@ -5,13 +5,28 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.app.DownloadManager;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.NotesAdapter;
 import com.example.felixalarm.adapters.WeatherAdapter;
@@ -20,16 +35,24 @@ import com.example.felixalarm.entities.Note;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import pl.droidsonroids.gif.GifImageView;
 
 
 public class WeatherActivity extends AppCompatActivity {
 
     private EditText inputCity;
-    private TextView cityNameText, temperatureText, conditionText;
+    private TextView cityNameText, temperatureText, conditionText, humidityText, pressureText, windSpeedText;
     private ImageView iconImage;
+    private ImageView searchImage;
+    private GifImageView gifBack;
 
     private RecyclerView weatherRecyclerView;
     private List<WeatherModal> weatherList;
@@ -37,7 +60,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "d2d4dc6c3e99f743a99857ee56a2e875";
-    DecimalFormat df = new DecimalFormat("#.##");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,19 +71,62 @@ public class WeatherActivity extends AppCompatActivity {
         temperatureText = findViewById(R.id.textTemperature);
         conditionText = findViewById(R.id.textCondition);
         iconImage = findViewById(R.id.imageIcon);
+        searchImage = findViewById(R.id.imageSearch);
+        gifBack = findViewById(R.id.gifback);
+        humidityText = findViewById(R.id.textHumidity);
+        pressureText = findViewById(R.id.textPressure);
+        windSpeedText = findViewById(R.id.textWindSpeed);
 
-        weatherRecyclerView = findViewById(R.id.weatherRecyclerView);
-        weatherRecyclerView.setLayoutManager(
-                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL)
-        );
-
-        weatherList = new ArrayList<>();
-        weatherRecyclerView.setAdapter(weatherAdapter);
-
+        //потом переделаю, чтобы оновсе отображалось не в текствью, а в ресайклервью
 
 
 
+//        weatherRecyclerView = findViewById(R.id.weatherRecyclerView);
+//        weatherRecyclerView.setLayoutManager(
+//                new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.HORIZONTAL)
+//        );
+//
+//        weatherList = new ArrayList<>();
+//        weatherRecyclerView.setAdapter(weatherAdapter);
 
+        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                getWeather();
+                return false;
+            }
+        });
+
+        inputCity.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                    // Perform action on key press
+                    getWeather();
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        //норм вариант(+-)
+
+//        inputCity.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                getWeather();
+//            }
+//        });
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_weather);
@@ -85,4 +150,128 @@ public class WeatherActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void getWeather() {
+        String tempUrl = "";
+        String city = inputCity.getText().toString().trim();
+
+        if (city.equals("")) {
+            Toast.makeText(this, "City field can't be empty!", Toast.LENGTH_LONG).show();
+        } else {
+//            https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={API key}
+            tempUrl = url + "?q=" + city + "&appid=" + appid;
+        }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, tempUrl, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("response", response);
+
+                String output = "";
+                try {
+                    JSONObject jsonResponse = new JSONObject(response);
+                    JSONArray jsonArray = jsonResponse.getJSONArray("weather");
+
+                    JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
+                    String description = jsonObjectWeather.getString("description");
+                    String icon = jsonObjectWeather.getString("icon");
+
+                    JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
+                    double temp = jsonObjectMain.getDouble("temp") - 273.15;
+                    double feelsLike = jsonObjectMain.getDouble("feels_like") - 273.15;
+                    float pressure = jsonObjectMain.getInt("pressure");
+                    int humidity = jsonObjectMain.getInt("humidity");
+
+                    JSONObject jsonObjectWind = jsonResponse.getJSONObject("wind");
+                    String wind = jsonObjectWind.getString("speed");
+
+                    JSONObject jsonObjectClouds = jsonResponse.getJSONObject("clouds");
+                    String clouds = jsonObjectClouds.getString("all");
+
+                    JSONObject jsonObjectSys = jsonResponse.getJSONObject("sys");
+                    String countryName = jsonObjectSys.getString("country");
+                    String cityName = jsonResponse.getString("name");
+
+                    //бета версия, отображение всего в 1 TV
+//                    output += "Current weather of " + cityName + ":"
+//                            + "\n temperature: " + df.format(temp) + " °C"
+//                            + "\n feels like: " + df.format(feelsLike) + " °C"
+//                            + "\n conditions: " + description;
+//                    conditionText.setText(output);
+
+                    cityNameText.setText(cityName);
+                    DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                    String tempT = decimalFormat.format(temp);
+                    temperatureText.setText(tempT + " °C");
+                    conditionText.setText(description);
+                    String humidityT = humidityText.getText().toString() + humidity + "%";
+                    humidityText.setText(humidityT);
+                    String pressureT = String.valueOf(pressure) + "Pa(N/m2)";
+                    pressureText.setText(pressureT);
+                    String windSpeedT = windSpeedText.getText().toString() + wind + "m/s";
+                    windSpeedText.setText(windSpeedT);
+
+
+
+                    gifBack.setVisibility(View.VISIBLE);
+                    switch (description) {
+                        case "clear sky":
+                            iconImage.setImageResource(R.drawable.sun);
+                            gifBack.setImageResource(R.drawable.sun_clouds);
+                            break;
+                        case "few clouds": //серые тучки, но с солнышком кек
+                            iconImage.setImageResource(R.drawable.cloudy);
+                            gifBack.setImageResource(R.drawable.sky_clouds);
+                            break;
+                        case "scattered clouds":  //серые тучки без грозы(без черых тучек)
+                            iconImage.setImageResource(R.drawable.cloud);
+                            gifBack.setImageResource(R.drawable.half_gray_clouds); //текстура half gray clouds кривая
+                            break;
+                        case "broken clouds":
+                        case "overcast clouds": //с черными тучками!
+                            iconImage.setImageResource(R.drawable.cloud_black);
+                            gifBack.setImageResource(R.drawable.gray_clouds);//overcast n broker have same icon
+                            break;
+                        case "light rain": //слабенький дождь
+                            iconImage.setImageResource(R.drawable.cloudy_rain);
+                            gifBack.setImageResource(R.drawable.raindrops);
+                            break;
+                        case "moderate rain": //умеренный дождь
+                            iconImage.setImageResource(R.drawable.rainy);
+                            gifBack.setImageResource(R.drawable.raindrops);
+                            break;
+
+                            //need to add snowy weather
+
+//                        case "":
+//                            iconImage.setImageResource(R.drawable.);
+//                        case "":
+//                            iconImage.setImageResource(R.drawable.);
+//                        case "":
+//                            iconImage.setImageResource(R.drawable.);
+
+                    }
+
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }, new Response.ErrorListener() {
+
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+//                Toast.makeText(getApplicationContext(), error.toString().trim(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+
+
 }

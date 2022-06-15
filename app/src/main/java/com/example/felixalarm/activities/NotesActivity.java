@@ -39,6 +39,7 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NotesAdapter notesAdapter;
+    
 
     private int noteClickedPosition = -1;
 
