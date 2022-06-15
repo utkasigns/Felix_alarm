@@ -203,15 +203,16 @@ public class WeatherActivity extends AppCompatActivity {
                     DecimalFormat decimalFormat = new DecimalFormat("#.#");
                     String tempT = decimalFormat.format(temp);
                     temperatureText.setText(tempT + " °C");
+
                     conditionText.setText(description);
-                    String humidityT = humidityText.getText().toString() + humidity + "%";
-                    humidityText.setText(humidityT);
-                    String pressureT = String.valueOf(pressure) + "Pa(N/m2)";
-                    pressureText.setText(pressureT);
-                    String windSpeedT = windSpeedText.getText().toString() + wind + "m/s";
-                    windSpeedText.setText(windSpeedT);
 
+                    String humidityT=String.valueOf(humidity);
+                    humidityText.setText("Humidity: " + humidityT + " %");
 
+                    String pressureT = String.valueOf(pressure);
+                    pressureText.setText("Pressure: " + pressureT + "Pa(N/m2)");
+
+                    windSpeedText.setText("Wind speed: " + wind + " m/s");
 
                     gifBack.setVisibility(View.VISIBLE);
                     switch (description) {
@@ -228,6 +229,9 @@ public class WeatherActivity extends AppCompatActivity {
                             gifBack.setImageResource(R.drawable.half_gray_clouds); //текстура half gray clouds кривая
                             break;
                         case "broken clouds":
+                            iconImage.setImageResource(R.drawable.cloud);
+                            gifBack.setImageResource(R.drawable.light_clouds);
+                            break;
                         case "overcast clouds": //с черными тучками!
                             iconImage.setImageResource(R.drawable.cloud_black);
                             gifBack.setImageResource(R.drawable.gray_clouds);//overcast n broker have same icon
@@ -238,17 +242,22 @@ public class WeatherActivity extends AppCompatActivity {
                             break;
                         case "moderate rain": //умеренный дождь
                             iconImage.setImageResource(R.drawable.rainy);
-                            gifBack.setImageResource(R.drawable.raindrops);
+                            gifBack.setImageResource(R.drawable.hard_rain);
                             break;
 
                             //need to add snowy weather
-
 //                        case "":
-//                            iconImage.setImageResource(R.drawable.);
+//                              iconImage.setImageResource(R.drawable.);
+//                              gifBack.setImageResource(R.drawable.);
+//                              break;
 //                        case "":
-//                            iconImage.setImageResource(R.drawable.);
+//                              iconImage.setImageResource(R.drawable.);
+//                              gifBack.setImageResource(R.drawable.);
+//                              break;
 //                        case "":
-//                            iconImage.setImageResource(R.drawable.);
+//                              iconImage.setImageResource(R.drawable.);
+//                              gifBack.setImageResource(R.drawable.);
+//                              break;
 
                     }
 
