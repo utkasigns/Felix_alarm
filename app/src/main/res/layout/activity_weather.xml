@@ -260,4 +260,30 @@
         android:textColor="@color/colorMainDark"
         android:textSize="@dimen/_20ssp"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageSettings"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/ic_settings"
+        app:tint="@color/colorMain"
+        android:layout_marginEnd="@dimen/_12sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/textWeather"
+        />
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    <include
+        android:id="@+id/layoutPopUpWindow"
+        layout="@layout/popup_window"
+        android:visibility="invisible" />
+    </RelativeLayout>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
