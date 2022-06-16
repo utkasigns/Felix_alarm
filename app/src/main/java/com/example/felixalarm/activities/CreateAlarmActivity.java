@@ -85,16 +85,18 @@ public class CreateAlarmActivity extends AppCompatActivity {
         });
         //....................................................................................
         //здесь  я тоже забыла чет дописать и теперь выходит ошибка
-        private PendingIntent getAlarmInfoPendingIntend(){
-            Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
-            alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-            return; PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
 
-        }
-        private PendingIntent  getAlarmActionPendingIntend(){
-            Intent intent=new Intent(this,AlarmOnActivity.class);
-
-        }
+        //я перенесла эти 2 метода после метода ОнКриэйт, а то там были методы в методе кхехе
+//        private PendingIntent getAlarmInfoPendingIntend(){
+//            Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
+//            alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+//            return; PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        }
+//        private PendingIntent  getAlarmActionPendingIntend(){
+//            Intent intent=new Intent(this,AlarmOnActivity.class);
+//
+//        }
         //.....................................................................................
 
         alarmBack=findViewById(R.id.alarmBack);
@@ -126,7 +128,20 @@ public class CreateAlarmActivity extends AppCompatActivity {
 
 
 
-}});}}
+}
+    private PendingIntent getAlarmInfoPendingIntend(){
+        Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
+        alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+        return PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
+
+    }
+    private PendingIntent  getAlarmActionPendingIntend(){
+        Intent intent=new Intent(this,AlarmOnActivity.class);
+
+    }
+
+
+}
 
 
 
