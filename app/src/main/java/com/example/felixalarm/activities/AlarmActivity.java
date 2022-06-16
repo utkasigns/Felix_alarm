@@ -33,7 +33,7 @@ public class AlarmActivity extends AppCompatActivity  {
     public static final int REQUEST_CODE_SHOW_ALARMS = 3;
 
     private List<String> alarmList;
-    private List<String> timeList;
+    private List<Integer> timeList;
     private List<Switch> switchList;
 
     AlarmClock alarmClock;
@@ -58,19 +58,13 @@ public class AlarmActivity extends AppCompatActivity  {
                     startActivity(i);}
 
             });
-      alarmRecyclerView=findViewById(R.id.alarmRecyclerView);
+        alarmRecyclerView=findViewById(R.id.alarmRecyclerView);
         AlarmsAdapter alarmsAdapter=new AlarmsAdapter(alarmList,timeList,switchList);
         alarmRecyclerView.setAdapter(alarmsAdapter);
         alarmRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
 
 
-//        imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivityForResult(
-//                        new Intent(getApplicationContext(), CreateAlarmActivity.class),
-//                        REQUEST_CODE_ADD_ALARM);
 
 
 //                Intent i=new Intent(getApplicationContext(), );
@@ -78,22 +72,6 @@ public class AlarmActivity extends AppCompatActivity  {
 //                 i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
 //                 i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
 //                 startActivity(i);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_alarm);
@@ -117,15 +95,6 @@ public class AlarmActivity extends AppCompatActivity  {
             }
         });}
         }
-
-
-
-
-
-
-
-
-
 
 
 

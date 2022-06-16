@@ -15,10 +15,10 @@ import java.util.List;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder> {
     private List<String> alarms;
-    private List<String> times;
+    private List<Integer> times;
     private List<Switch> switches;
 
-    public AlarmsAdapter(List<String> alarms,List<String> times,List<Switch> switches){
+    public AlarmsAdapter(List<String> alarms,List<Integer> times,List<Switch> switches){
         this.alarms=alarms;
         this.times=times;
         this.switches=switches;
