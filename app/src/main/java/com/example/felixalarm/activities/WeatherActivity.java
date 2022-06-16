@@ -2,6 +2,7 @@ package com.example.felixalarm.activities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -9,16 +10,23 @@ import android.app.DownloadManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,7 +61,10 @@ public class WeatherActivity extends AppCompatActivity {
     private TextView cityNameText, temperatureText, conditionText, humidityText, pressureText, windSpeedText;
     private ImageView iconImage;
     private ImageView searchImage;
+    private ImageView settingsImage;
     private GifImageView gifBack;
+    private Button btGifs;
+    private Button btImages;    
 
     private RecyclerView weatherRecyclerView;
     private List<WeatherModal> weatherList;
@@ -61,6 +72,9 @@ public class WeatherActivity extends AppCompatActivity {
 
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "d2d4dc6c3e99f743a99857ee56a2e875";
+
+
+    String descriptionT;
 
 //    JSONObject saved = new JSONObject();
 //    SharedPreferences preferences;
@@ -81,9 +95,10 @@ public class WeatherActivity extends AppCompatActivity {
         humidityText = findViewById(R.id.textHumidity);
         pressureText = findViewById(R.id.textPressure);
         windSpeedText = findViewById(R.id.textWindSpeed);
+        settingsImage = findViewById(R.id.imageSettings);
+
 
         //потом переделаю, чтобы оновсе отображалось не в текствью, а в ресайклервью
-
 
 
 //        weatherRecyclerView = findViewById(R.id.weatherRecyclerView);
@@ -95,16 +110,14 @@ public class WeatherActivity extends AppCompatActivity {
 //        weatherRecyclerView.setAdapter(weatherAdapter);
 
 
-
-
-//        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-//                getWeather();
-////                saveWeather();
-//                return false;
-//            }
-//        });
+        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                getWeather();
+//                saveWeather();
+                return false;
+            }
+        });
 
         inputCity.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -190,6 +203,99 @@ public class WeatherActivity extends AppCompatActivity {
 //            }
 //        }
 
+        settingsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+//                LayoutInflater inflater = (LayoutInflater)
+//                        getSystemService(LAYOUT_INFLATER_SERVICE);
+//                View popupView = inflater.inflate(R.layout.popup_window, null);
+//
+//                int width = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+//                int height = ConstraintLayout.LayoutParams.WRAP_CONTENT;
+//                boolean focusable = true; // lets taps outside the popup also dismiss it
+//                final PopupWindow popupWindow = new PopupWindow(popupView, width, height, focusable);
+//
+//                popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);
+//                popupWindow.setBackgroundDrawable(new ColorDrawable(Color.WHITE));
+//                popupWindow.setElevation(20);
+//
+//                setContentView(R.layout.popup_window);
+
+
+
+                findViewById(R.id.layoutPopUpWindow).setVisibility(View.VISIBLE);
+                btGifs = findViewById(R.id.btGifs);
+                btGifs.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+
+                            switch (descriptionT) {
+                                case "clear sky":
+                                    gifBack.setImageResource(R.drawable.sun_clouds);
+                                    break;
+                                case "few clouds": //серые тучки, но с солнышком кек
+                                    gifBack.setImageResource(R.drawable.sky_clouds);
+                                    break;
+                                case "scattered clouds":  //серые тучки без грозы(без черых тучек)
+                                case "broken clouds":
+                                    gifBack.setImageResource(R.drawable.half_gray_clouds); //текстура half gray clouds кривая
+                                    break;
+                                case "overcast clouds": //с черными тучками!
+                                    gifBack.setImageResource(R.drawable.gray_clouds);//overcast n broker have same icon
+                                    break;
+                                case "light rain": //слабенький дождь
+                                    gifBack.setImageResource(R.drawable.raindrops);
+                                    break;
+                                case "moderate rain": //умеренный дождь
+                                    gifBack.setImageResource(R.drawable.hard_rain);
+                                    break;
+
+                            }
+                            findViewById(R.id.layoutPopUpWindow).setVisibility(View.INVISIBLE);
+
+
+                        }
+                    });
+
+                    btImages = findViewById(R.id.btImages);
+                    btImages.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            gifBack.setAlpha(0.9F);
+                            switch (descriptionT) {
+                                case "clear sky":
+                                    gifBack.setImageResource(R.drawable.sunny_w);
+                                    break;
+                                case "few clouds": //серые тучки, но с солнышком кек
+                                case "scattered clouds":  //серые тучки без грозы(без черых тучек)
+                                case "broken clouds":
+                                case "overcast clouds": //с черными тучками!
+                                    gifBack.setImageResource(R.drawable.cloudy_w);//overcast n broker have same icon
+                                    break;
+                                case "light rain": //слабенький дождь
+                                case "moderate rain": //умеренный дождь
+                                    gifBack.setImageResource(R.drawable.snowy_w);
+                                    break;
+
+                            }
+                            findViewById(R.id.layoutPopUpWindow).setVisibility(View.INVISIBLE);
+                        }
+                    });
+
+
+//
+//                popupView.setOnTouchListener(new View.OnTouchListener() {
+//                    @Override
+//                    public boolean onTouch(View v, MotionEvent event) {
+//                        popupWindow.dismiss();
+//                        return true;
+//                    }
+//                });
+
+
+            }
+        });
     }
 
 //    private void init() {
@@ -238,6 +344,14 @@ public class WeatherActivity extends AppCompatActivity {
 
                     JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
                     String description = jsonObjectWeather.getString("description");
+
+                    descriptionT = description;
+
+                    //пока забудем об этом
+//                    Intent intent = new Intent(WeatherActivity.this, AlarmActivity.class);
+//                    intent.putExtra("description",description);
+//                    startActivity(intent);
+
                     String icon = jsonObjectWeather.getString("icon");
 
                     JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");

@@ -16,8 +16,10 @@
         <entry key="app/src/main/res/drawable/background_note_color_3.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_note_color_4.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_note_color_5.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/background_popup_window.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_search.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/background_subtitle_indicator.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/background_theme_button.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/card_background.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/ic_add_outline.xml" value="0.25462962962962965" />
         <entry key="app/src/main/res/drawable/ic_alarm.xml" value="0.25462962962962965" />
@@ -39,6 +41,7 @@
         <entry key="app/src/main/res/layout/layout_add_url.xml" value="0.1" />
         <entry key="app/src/main/res/layout/layout_delete_note.xml" value="0.18328541960720507" />
         <entry key="app/src/main/res/layout/layout_miscellaneous.xml" value="0.19183688503756147" />
+        <entry key="app/src/main/res/layout/popup_window.xml" value="0.1754711626483245" />
         <entry key="app/src/main/res/menu/bottom_menu.xml" value="0.25" />
         <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
       </map>
