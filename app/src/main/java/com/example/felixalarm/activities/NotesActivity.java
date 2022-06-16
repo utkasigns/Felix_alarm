@@ -43,6 +43,8 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
 
     private int noteClickedPosition = -1;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

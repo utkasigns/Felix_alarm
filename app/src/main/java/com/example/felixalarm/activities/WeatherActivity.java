@@ -6,7 +6,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.app.DownloadManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -62,10 +61,6 @@ public class WeatherActivity extends AppCompatActivity {
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "d2d4dc6c3e99f743a99857ee56a2e875";
 
-//    JSONObject saved = new JSONObject();
-//    SharedPreferences preferences;
-//    SharedPreferences.Editor editor;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -94,17 +89,13 @@ public class WeatherActivity extends AppCompatActivity {
 //        weatherList = new ArrayList<>();
 //        weatherRecyclerView.setAdapter(weatherAdapter);
 
-
-
-
-//        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-//                getWeather();
-////                saveWeather();
-//                return false;
-//            }
-//        });
+        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                getWeather();
+                return false;
+            }
+        });
 
         inputCity.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -113,22 +104,6 @@ public class WeatherActivity extends AppCompatActivity {
                         (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     // Perform action on key press
                     getWeather();
-//                    String s = inputCity.getText().toString().trim();
-//                    if (!s.equals("")) {
-//                        try {
-//                            if (!preferences.getString("saved", "").equals("")) {
-//                                saved = new JSONObject(preferences.getString("saved", ""));
-//                            }
-//                            saved.put("saved"+saved.length(),s);
-//                        } catch (JSONException e) {
-//                            e.printStackTrace();
-//                        }
-//                        Log.d("testing", saved+"");
-//                        editor.putString("saved", saved.toString());
-//                        editor.apply();
-//                        inputCity.setText("");
-//                    }
-//                    saveWeather();
                     return true;
                 }
                 return false;
@@ -174,46 +149,7 @@ public class WeatherActivity extends AppCompatActivity {
                 return false;
             }
         });
-
-//        init();
-//        Intent intent = getIntent();
-//        if (intent.getIntExtra("position", -1) != -1) {
-//            try {
-//                String s = inputCity.getText().toString().trim();
-//                if (!preferences.getString("saved", "").equals("")) {
-//                    saved = new JSONObject(preferences.getString("saved", ""));
-//                }
-//                inputCity.setText(saved.getString("saved"+intent.getIntExtra("position", 0)));
-//                s = saved.getString("saved"+intent.getIntExtra("position", 0));
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-
     }
-
-//    private void init() {
-//        preferences = getSharedPreferences("text", Context.MODE_PRIVATE);
-//        editor = preferences.edit();
-//
-//        inputCity = findViewById(R.id.inputCity);
-//        cityNameText = findViewById(R.id.textCityName);
-//
-//
-//
-//    }
-
-//    public void saveWeather(){
-//
-//
-//        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(WeatherActivity.this);
-//        SharedPreferences.Editor editor = prefs.edit();
-//
-//        editor.putString("CITY_NAME", cityNameText.getText().toString());
-//        editor.commit();
-//
-////        editor.putString(String.valueOf(cityNameText), String.valueOf(cityNameText));
-//    }
 
 
     public void getWeather() {
@@ -274,7 +210,7 @@ public class WeatherActivity extends AppCompatActivity {
                     humidityText.setText("Humidity: " + humidityT + " %");
 
                     String pressureT = String.valueOf(pressure);
-                    pressureText.setText("Pressure: " + pressureT + " Pa");
+                    pressureText.setText("Pressure: " + pressureT + "Pa(N/m2)");
 
                     windSpeedText.setText("Wind speed: " + wind + " m/s");
 
@@ -289,9 +225,12 @@ public class WeatherActivity extends AppCompatActivity {
                             gifBack.setImageResource(R.drawable.sky_clouds);
                             break;
                         case "scattered clouds":  //серые тучки без грозы(без черых тучек)
-                        case "broken clouds":
                             iconImage.setImageResource(R.drawable.cloud);
                             gifBack.setImageResource(R.drawable.half_gray_clouds); //текстура half gray clouds кривая
+                            break;
+                        case "broken clouds":
+                            iconImage.setImageResource(R.drawable.cloud);
+                            gifBack.setImageResource(R.drawable.light_clouds);
                             break;
                         case "overcast clouds": //с черными тучками!
                             iconImage.setImageResource(R.drawable.cloud_black);
@@ -322,9 +261,12 @@ public class WeatherActivity extends AppCompatActivity {
 
                     }
 
+
+
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
+
 
             }
         }, new Response.ErrorListener() {

@@ -1,14 +1,19 @@
 package com.example.felixalarm.activities;
 
+import android.app.AlarmManager;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.provider.AlarmClock;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
@@ -26,45 +31,17 @@ import java.util.Locale;
 
 
 public class CreateAlarmActivity extends AppCompatActivity {
-    TextView timer1,timer2;
-    int hour1,minute1;
-    int hour2,minute2;
+    private TextView timer1;
+    private int hour1,minute1;
+    private Button alarmBack, alarmSave;
+    private EditText alarmName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alarm);
-        timer1 =findViewById(R.id.timer1);
-        timer2=findViewById(R.id.timer2);
-
+        timer1=findViewById(R.id.timer);
         timer1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //инициализируем таймпикердайлог
-                TimePickerDialog timePickerDialog = new TimePickerDialog(
-                        CreateAlarmActivity.this,
-                        new TimePickerDialog.OnTimeSetListener() {
-                            @Override
-                            public void onTimeSet(TimePicker timePicker, int hourOfDay, int minute) {
-                                //инициализируем часы и минуты
-                                hour1 = hourOfDay;
-                                minute1 = minute;
-                                //инициализируем календарь
-                                Calendar calendar = Calendar.getInstance();
-                                //задаем часы и минуты
-                                calendar.set(0, 0, 0, hour1, minute1);
-                                //задаем выбранное время в текствью
-                                timer1.setText(DateFormat.format("hh:mm aa", calendar));
-                            }
-                        }, 12, 0, false
-                );
-                //отображаем предыдущее выбранное время
-                timePickerDialog.updateTime(hour1, minute1);
-                //показать диалог
-                timePickerDialog.show();
-            }
-        });
-        timer2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 TimePickerDialog timePickerDialog =new TimePickerDialog(
@@ -73,10 +50,10 @@ public class CreateAlarmActivity extends AppCompatActivity {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                hour2=hourOfDay;
-                                minute2=minute;
+                                hour1=hourOfDay;
+                                minute1=minute;
                                 //вносим часы и минуты в стрингу
-                                String time= hour2+":"+minute2;
+                                String time= hour1+":"+minute1;
                                 //инициализируем 24 часовой формат
                                 SimpleDateFormat f24Hours= new SimpleDateFormat(
                                         "HH:mm"
@@ -88,7 +65,7 @@ public class CreateAlarmActivity extends AppCompatActivity {
                                            "hh:mm aa"
                                     );
                                     //задаем выбранное время в текст вью
-                                    timer2.setText(f12Hours.format(date));
+                                    timer1.setText(f12Hours.format(date));
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -96,37 +73,60 @@ public class CreateAlarmActivity extends AppCompatActivity {
                             }
                         }, 12,0,false
                 );
-            // set transparent background транспарент вроде прозрачный
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 //отображаем предыдущее выбранное время
-                timePickerDialog.updateTime(hour2, minute2);
+                timePickerDialog.updateTime(hour1, minute1);
                 timePickerDialog.show();
 
-
-
+                AlarmManager alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                AlarmManager.AlarmClockInfo alarmClockInfo= new AlarmManager.AlarmClockInfo();
 
             }
         });
+        //....................................................................................
+        //здесь  я тоже забыла чет дописать и теперь выходит ошибка
+        private PendingIntent getAlarmInfoPendingIntend(){
+            Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
+            alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            return; PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
+
+        }
+        private PendingIntent  getAlarmActionPendingIntend(){
+            Intent intent=new Intent(this,AlarmOnActivity.class);
+
+        }
+        //.....................................................................................
+
+        alarmBack=findViewById(R.id.alarmBack);
+        alarmBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
+        alarmName=findViewById(R.id.alarmName);
+        alarmSave=findViewById(R.id.alarmSave);
+        alarmSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String settingAlarmName=alarmName.getText().toString();
+
+                Context context=CreateAlarmActivity.this;
+                Intent i=new Intent(context,AlarmActivity.class);
+                //...............................................
+                //тут мне нужно как раз таки передать данные чтобы они сохранялись
+                    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+                    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+                    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+            }
+            //.....................................................................................
+        });
+
+        alarmName=findViewById(R.id.alarmName);
 
 
 
-//    public void popTimePicker(View view)
-//    {
-//        TimePickerDialog.OnTimeSetListener OnTimeSetListener = new TimePickerDialog.OnTimeSetListener() {
-//
-//            @Override
-//            public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute)
-//            {
-//                hour=selectedHour;
-//                minute=selectedMinute;
-//                timeButton.setText(String.format(Locale.getDefault(),"%02d.%02d",hour,minute));
-//            }
-//        };
-//        int style= AlertDialog.THEME_HOLO_DARK;
-//
-//        TimePickerDialog TimePickerDialog = new TimePickerDialog(this,style, OnTimeSetListener,hour, minute,true);
-//    }
-}}
+}});}}
 
 
 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/snow_backgroung"
+    android:orientation="vertical"
+
+    tools:context=".activities.AlarmOnActivity">
+
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:layout_marginStart="100dp"
+        android:text="08:25"
+        android:textSize="80dp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textColor="@color/white"
+        tools:layout_editor_absoluteX="179dp"
+        tools:layout_editor_absoluteY="182dp" />
+
+    <ImageView
+        android:id="@+id/button_alarm_off"
+        android:layout_width="137dp"
+        android:layout_height="136dp"
+        android:layout_marginStart="140dp"
+        android:layout_marginTop="300dp"
+        android:background="@drawable/button_snow_alarm_off"
+        tools:layout_editor_absoluteX="9dp"
+        tools:layout_editor_absoluteY="16dp" />
+
+
+</LinearLayout>

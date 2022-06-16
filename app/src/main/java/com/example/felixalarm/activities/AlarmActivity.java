@@ -1,7 +1,9 @@
 package com.example.felixalarm.activities;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -13,8 +15,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Switch;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.adapters.AlarmsAdapter;
 import com.example.felixalarm.adapters.NotesAdapter;
 import com.example.felixalarm.entities.Note;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -28,12 +32,15 @@ public class AlarmActivity extends AppCompatActivity  {
     public static final int REQUEST_CODE_UPDATE_ALARM = 2;
     public static final int REQUEST_CODE_SHOW_ALARMS = 3;
 
-    private RecyclerView alarmsRecyclerView;
-    private List<Note> alarmList;
+    private List<String> alarmList;
+    private List<String> timeList;
+    private List<Switch> switchList;
+
     AlarmClock alarmClock;
     int hours,minutes;
 
     private int alarmClickedPosition = -1;
+    private RecyclerView alarmRecyclerView;
 
 
 
@@ -45,26 +52,47 @@ public class AlarmActivity extends AppCompatActivity  {
         ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
         imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                startActivityForResult(
-                        new Intent(getApplicationContext(), CreateAlarmActivity.class),
-                        REQUEST_CODE_ADD_ALARM
-//
-//                        new Intent(AlarmClock.ACTION_SET_ALARM);
+            public void onClick(View v) {
+                Intent i= new Intent(getApplicationContext(), CreateAlarmActivity.class);
+
+                    startActivity(i);}
+
+            });
+      alarmRecyclerView=findViewById(R.id.alarmRecyclerView);
+        AlarmsAdapter alarmsAdapter=new AlarmsAdapter(alarmList,timeList,switchList);
+        alarmRecyclerView.setAdapter(alarmsAdapter);
+        alarmRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+
+
+//        imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivityForResult(
+//                        new Intent(getApplicationContext(), CreateAlarmActivity.class),
+//                        REQUEST_CODE_ADD_ALARM);
+
+
+//                Intent i=new Intent(getApplicationContext(), );
 //                 i.putExtra(AlarmClock.EXTRA_HOUR, hours);
 //                 i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
 //                 i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
 //                 startActivity(i);
-//                 );
-//            }
 
 
-//        alarmsRecyclerView = findViewById(R.id.alarmRecyclerView);
-//        alarmsRecyclerView.setLayoutManager(
-//                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
-        );
 
-        alarmList = new ArrayList<>();
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -88,8 +116,30 @@ public class AlarmActivity extends AppCompatActivity  {
                 return false;
             }
         });}
-        });
-    }}
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //        @Override
 //        public void onAlarmClicked (Alarm alarm,int position){
@@ -99,15 +149,6 @@ public class AlarmActivity extends AppCompatActivity  {
 //            intent.putExtra("alarm",alarm);
 //            startActivityForResult(intent, REQUEST_CODE_UPDATE_ALARM);
 //        }
-
-
-
-
-
-
-
-
-
 
 //        bottomNavigationView = findViewById(R.id.bottom_navigation);
 //        View itemAlarm = findViewById(R.id.nav_alarm);
