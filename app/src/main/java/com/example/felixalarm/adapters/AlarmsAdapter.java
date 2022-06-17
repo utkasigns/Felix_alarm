@@ -13,8 +13,9 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.activities.Alarm;
 import com.example.felixalarm.activities.AlarmActivity;
-import com.example.felixalarm.entities.Alarm;
+//import com.example.felixalarm.entities.Alarm;
 import com.example.felixalarm.listeners.AlarmsListener;
 
 import java.util.List;

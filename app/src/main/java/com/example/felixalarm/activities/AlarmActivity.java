@@ -14,7 +14,7 @@ import android.widget.ImageView;
 
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.AlarmsAdapter;
-import com.example.felixalarm.entities.Alarm;
+//import com.example.felixalarm.entities.Alarm;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 
@@ -29,6 +29,8 @@ public class AlarmActivity extends AppCompatActivity  {
 
     LinearLayoutManager alarmManager;
     AlarmsAdapter alarmsAdapter;
+    AlarmListApplication alarmListApplication= (AlarmListApplication) this.getApplication();
+
     List<Alarm> alarmList=new ArrayList<Alarm>();
 
 
@@ -38,18 +40,19 @@ public class AlarmActivity extends AppCompatActivity  {
     private int alarmClickedPosition = -1;
     private RecyclerView alarmRecyclerView;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
+
+        alarmList=AlarmListApplication.getAlarmList();
 
         ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
         imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i= new Intent(AlarmActivity.this, CreateAlarmActivity.class);
+                startActivity(i);
                 ;}
 
             });

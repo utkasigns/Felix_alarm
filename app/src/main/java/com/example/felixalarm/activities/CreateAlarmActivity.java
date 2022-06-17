@@ -1,17 +1,15 @@
 package com.example.felixalarm.activities;
 
-import android.annotation.SuppressLint;
+import static com.example.felixalarm.activities.AlarmListApplication.nextId;
+
 import android.app.AlarmManager;
-import android.app.AsyncNotedAppOp;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.provider.AlarmClock;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,11 +20,11 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.felixalarm.R;
-import com.example.felixalarm.entities.Alarm;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 public class CreateAlarmActivity extends AppCompatActivity {
@@ -34,11 +32,15 @@ public class CreateAlarmActivity extends AppCompatActivity {
     private int hour1,minute1;
     private Button alarmBack, alarmSave;
     private EditText alarmName;
+    List<Alarm> alarmList;
+    AlarmListApplication alarmListApplication = (AlarmListApplication) this.getApplication();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alarm);
+
+        alarmList=AlarmListApplication.getAlarmList();
         timer1=findViewById(R.id.timer);
         timer1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,6 +115,17 @@ public class CreateAlarmActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+                //создаем будильник
+                int nextId=AlarmListApplication.getNextId();
+                Alarm newAlarm=new Alarm(nextId,
+                        alarmName.getText().toString(),
+                        timer1.getText().toString());
+
+
+                //добавляем будильник в глобальный список
+
+                alarmList.add(newAlarm);
+                AlarmListApplication.setNextId(nextId++);
                 saveAlarm();
             }
         });
@@ -147,7 +160,8 @@ public class CreateAlarmActivity extends AppCompatActivity {
             Toast.makeText(this, "Select time for alarm!", Toast.LENGTH_LONG).show();
             return;
         }
-        final Alarm alarm=new Alarm();
+
+        final Alarm alarm=new Alarm(nextId, alarmName.getText().toString(), timer1.getText().toString());
         alarm.setName(alarmName.getText().toString());
         alarm.setTime(timer1.getText().toString());
 
