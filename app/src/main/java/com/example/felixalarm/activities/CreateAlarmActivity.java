@@ -29,7 +29,7 @@ import java.util.List;
 
 public class CreateAlarmActivity extends AppCompatActivity {
     private TextView timer1;
-    private int hour1,minute1;
+    private int hour1, minute1;
     private Button alarmBack, alarmSave;
     private EditText alarmName;
     List<Alarm> alarmList;
@@ -40,30 +40,30 @@ public class CreateAlarmActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_alarm);
 
-        alarmList=AlarmListApplication.getAlarmList();
-        timer1=findViewById(R.id.timer);
+        alarmList = AlarmListApplication.getAlarmList();
+        timer1 = findViewById(R.id.timer);
         timer1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                TimePickerDialog timePickerDialog =new TimePickerDialog(
+                TimePickerDialog timePickerDialog = new TimePickerDialog(
                         CreateAlarmActivity.this,
                         android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                hour1=hourOfDay;
-                                minute1=minute;
+                                hour1 = hourOfDay;
+                                minute1 = minute;
                                 //вносим часы и минуты в стрингу
-                                String time= hour1+":"+minute1;
+                                String time = hour1 + ":" + minute1;
                                 //инициализируем 24 часовой формат
-                                SimpleDateFormat f24Hours= new SimpleDateFormat(
+                                SimpleDateFormat f24Hours = new SimpleDateFormat(
                                         "HH:mm"
                                 );
                                 try {
-                                    Date date=f24Hours.parse(time);
+                                    Date date = f24Hours.parse(time);
                                     //инициализируем 12ти часовой формат
-                                    SimpleDateFormat f12Hours= new SimpleDateFormat(
-                                           "hh:mm aa"
+                                    SimpleDateFormat f12Hours = new SimpleDateFormat(
+                                            "hh:mm aa"
                                     );
                                     //задаем выбранное время в текст вью
                                     timer1.setText(f12Hours.format(date));
@@ -72,14 +72,14 @@ public class CreateAlarmActivity extends AppCompatActivity {
                                 }
 
                             }
-                        }, 12,0,false
+                        }, 12, 0, false
                 );
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 //отображаем предыдущее выбранное время
                 timePickerDialog.updateTime(hour1, minute1);
                 timePickerDialog.show();
 
-                AlarmManager alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
+                AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
 //                AlarmManager.AlarmClockInfo alarmClockInfo= new AlarmManager.AlarmClockInfo();
 
             }
@@ -102,22 +102,23 @@ public class CreateAlarmActivity extends AppCompatActivity {
         //.....................................................................................
 
 
-        alarmBack=findViewById(R.id.alarmBack);
+        alarmBack = findViewById(R.id.alarmBack);
         alarmBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(CreateAlarmActivity.this, AlarmActivity.class);
-                startActivity(i);}
-            });
-        alarmName=findViewById(R.id.alarmName);
-        alarmSave=findViewById(R.id.alarmSave);
+                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+                startActivity(i);
+            }
+        });
+        alarmName = findViewById(R.id.alarmName);
+        alarmSave = findViewById(R.id.alarmSave);
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //создаем будильник
-                int nextId=AlarmListApplication.getNextId();
-                Alarm newAlarm=new Alarm(nextId,
+                int nextId = AlarmListApplication.getNextId();
+                Alarm newAlarm = new Alarm(nextId,
                         alarmName.getText().toString(),
                         timer1.getText().toString());
 
@@ -125,21 +126,33 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 //добавляем будильник в глобальный список
 
                 alarmList.add(newAlarm);
-                AlarmListApplication.setNextId(nextId++);
-                saveAlarm();
+                ++nextId;
+                AlarmListApplication.setNextId(nextId);
+                if (alarmName == null) {
+                    Toast.makeText(CreateAlarmActivity.this, "Alarm must have name!", Toast.LENGTH_LONG).show();
+                    return;
+                } else if (timer1 == null) {
+                    Toast.makeText(CreateAlarmActivity.this, "Select time for alarm!", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+//                final Alarm alarm=new Alarm(nextId, alarmName.getText().toString(), timer1.getText().toString());
+//                alarm.setName(alarmName.getText().toString());
+//                alarm.setTime(timer1.getText().toString());
+//                saveAlarm();
             }
         });
-
 
 
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String name=alarmName.getText().toString();
-                Intent i= new Intent(CreateAlarmActivity.this, AlarmActivity.class);
-                startActivity(i);}
-                //...............................................
-                //тут мне нужно как раз таки передать данные чтобы они сохранялись
+                String name = alarmName.getText().toString();
+                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+                startActivity(i);
+            }
+            //...............................................
+            //тут мне нужно как раз таки передать данные чтобы они сохранялись
 //                    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
 //                    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
 //                    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
@@ -147,43 +160,28 @@ public class CreateAlarmActivity extends AppCompatActivity {
             //.....................................................................................
         });
 
-        alarmName=findViewById(R.id.alarmName);
+        alarmName = findViewById(R.id.alarmName);
 
 
-
-}
-    private void saveAlarm() {
-        if(alarmName==null) {
-            Toast.makeText(this,"Alarm must have name!", Toast.LENGTH_LONG).show();
-            return;
-        }else if (timer1==null) {
-            Toast.makeText(this, "Select time for alarm!", Toast.LENGTH_LONG).show();
-            return;
-        }
-
-        final Alarm alarm=new Alarm(nextId, alarmName.getText().toString(), timer1.getText().toString());
-        alarm.setName(alarmName.getText().toString());
-        alarm.setTime(timer1.getText().toString());
-
-
+//}
+//    private void saveAlarm() {
+//
+//
+//
+//    }
     }
 
-
-    private PendingIntent getAlarmInfoPendingIntend(){
-        Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
+    private PendingIntent getAlarmInfoPendingIntend() {
+        Intent alarmInfoIntend = new Intent(this, AlarmActivity.class);
         alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-        return PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
-
-    }
-    private void getAlarmActionPendingIntend(){
-        Intent intent=new Intent(this,AlarmOnActivity.class);
+        return PendingIntent.getActivity(this, 0, alarmInfoIntend, PendingIntent.FLAG_UPDATE_CURRENT);
 
     }
 
+    private void getAlarmActionPendingIntend() {
+        Intent intent = new Intent(this, AlarmOnActivity.class);
+
+    }
 
 
 }
-
-
-
-

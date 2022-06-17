@@ -6,8 +6,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.provider.AlarmClock;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,8 +19,10 @@ import com.example.felixalarm.adapters.AlarmsAdapter;
 //import com.example.felixalarm.entities.Alarm;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AlarmActivity extends AppCompatActivity  {
@@ -26,13 +30,12 @@ public class AlarmActivity extends AppCompatActivity  {
     public static final int REQUEST_CODE_UPDATE_ALARM = 2;
     public static final int REQUEST_CODE_SHOW_ALARMS = 3;
 
-
     LinearLayoutManager alarmManager;
     AlarmsAdapter alarmsAdapter;
     AlarmListApplication alarmListApplication= (AlarmListApplication) this.getApplication();
 
     List<Alarm> alarmList=new ArrayList<Alarm>();
-
+    private static final String TAG="alarm app";
 
     AlarmClock alarmClock;
     int hours,minutes;
@@ -44,8 +47,10 @@ public class AlarmActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-
+        fillAlarmList();
+        Log.d(TAG, "OnCreate:" +alarmList.toString());
         alarmList=AlarmListApplication.getAlarmList();
+
 
         ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
         imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +107,14 @@ public class AlarmActivity extends AppCompatActivity  {
                 }
                 return false;
             }
-        });}}
+        });}
+
+    private void fillAlarmList() {
+        Alarm a1=new Alarm(1,"aaa","12:12");
+        Alarm a2=new Alarm(2,"ooo","13:12");
+        alarmList.addAll(Arrays.asList(new Alarm[]{a1,a2}));
+    }
+}
 
 
 
