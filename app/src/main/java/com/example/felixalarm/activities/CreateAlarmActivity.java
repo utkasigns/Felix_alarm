@@ -1,33 +1,32 @@
 package com.example.felixalarm.activities;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
+import android.app.AsyncNotedAppOp;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.AlarmClock;
-import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.entities.Alarm;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 
 public class CreateAlarmActivity extends AppCompatActivity {
@@ -79,10 +78,12 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 timePickerDialog.show();
 
                 AlarmManager alarmManager=(AlarmManager) getSystemService(Context.ALARM_SERVICE);
-                AlarmManager.AlarmClockInfo alarmClockInfo= new AlarmManager.AlarmClockInfo();
+//                AlarmManager.AlarmClockInfo alarmClockInfo= new AlarmManager.AlarmClockInfo();
 
             }
         });
+
+
         //....................................................................................
         //здесь  я тоже забыла чет дописать и теперь выходит ошибка
 
@@ -95,9 +96,9 @@ public class CreateAlarmActivity extends AppCompatActivity {
 //        }
 //        private PendingIntent  getAlarmActionPendingIntend(){
 //            Intent intent=new Intent(this,AlarmOnActivity.class);
-//
-//        }
+//     }
         //.....................................................................................
+
 
         alarmBack=findViewById(R.id.alarmBack);
         alarmBack.setOnClickListener(new View.OnClickListener() {
@@ -106,8 +107,18 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 onBackPressed();
             }
         });
+
         alarmName=findViewById(R.id.alarmName);
         alarmSave=findViewById(R.id.alarmSave);
+        alarmSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveAlarm();
+            }
+        });
+
+
+
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -117,8 +128,8 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 Intent i=new Intent(context,AlarmActivity.class);
                 //...............................................
                 //тут мне нужно как раз таки передать данные чтобы они сохранялись
-                    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
-                    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
+//                    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
+//                    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
                     i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
             }
             //.....................................................................................
@@ -129,16 +140,34 @@ public class CreateAlarmActivity extends AppCompatActivity {
 
 
 }
+    private void saveAlarm() {
+        if(alarmName==null) {
+            Toast.makeText(this,"Alarm must have name!", Toast.LENGTH_LONG).show();
+            return;
+        }else if (timer1==null) {
+            Toast.makeText(this, "Select time for alarm!", Toast.LENGTH_LONG).show();
+            return;
+        }
+        final Alarm alarm=new Alarm();
+        alarm.setName(alarmName.getText().toString());
+        alarm.setTime(timer1.getText().toString());
+
+
+    }
+
+
+
     private PendingIntent getAlarmInfoPendingIntend(){
         Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
         alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         return PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
 
     }
-    private PendingIntent  getAlarmActionPendingIntend(){
+    private void getAlarmActionPendingIntend(){
         Intent intent=new Intent(this,AlarmOnActivity.class);
 
     }
+
 
 
 }
