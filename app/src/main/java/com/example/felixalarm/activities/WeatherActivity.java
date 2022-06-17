@@ -17,6 +17,7 @@ import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -54,10 +55,17 @@ public class WeatherActivity extends AppCompatActivity {
     private ImageView iconImage;
     private ImageView searchImage;
     private GifImageView gifBack;
+    ImageView settingsImage;
+    Button btGifs, btImages;
+
+
 
     private RecyclerView weatherRecyclerView;
     private List<WeatherModal> weatherList;
     private WeatherAdapter weatherAdapter;
+
+    String descriptionT;
+    boolean isThemeChanged;
 
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "d2d4dc6c3e99f743a99857ee56a2e875";
@@ -81,6 +89,72 @@ public class WeatherActivity extends AppCompatActivity {
         humidityText = findViewById(R.id.textHumidity);
         pressureText = findViewById(R.id.textPressure);
         windSpeedText = findViewById(R.id.textWindSpeed);
+        settingsImage = findViewById(R.id.imageSettings);
+        btGifs = findViewById(R.id.btGifs);
+        btImages = findViewById(R.id.btImages);
+
+
+        settingsImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                findViewById(R.id.layoutPopUpWindow).setVisibility(View.VISIBLE);
+
+                btGifs.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gifBack.setVisibility(View.VISIBLE);
+                        switch (descriptionT) {
+                            case "clear sky":
+                                gifBack.setImageResource(R.drawable.sun_clouds);
+                                break;
+                            case "few clouds": //серые тучки, но с солнышком кек
+                                gifBack.setImageResource(R.drawable.sky_clouds);
+                                break;
+                            case "scattered clouds":  //серые тучки без грозы(без черых тучек)
+                            case "broken clouds":
+                                gifBack.setImageResource(R.drawable.half_gray_clouds); //текстура half gray clouds кривая
+                                break;
+                            case "overcast clouds": //с черными тучками!
+                                gifBack.setImageResource(R.drawable.gray_clouds);//overcast n broker have same icon
+                                break;
+                            case "light rain": //слабенький дождь
+                                gifBack.setImageResource(R.drawable.raindrops);
+                                break;
+                            case "moderate rain": //умеренный дождь
+                                gifBack.setImageResource(R.drawable.hard_rain);
+                                break;
+                        }
+                        isThemeChanged = false;
+                        findViewById(R.id.layoutPopUpWindow).setVisibility(View.INVISIBLE);
+                    }
+        });
+                btImages.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        gifBack.setVisibility(View.VISIBLE);
+                        gifBack.setAlpha(0.9F);
+                        switch (descriptionT) {
+                            case "clear sky":
+                                gifBack.setImageResource(R.drawable.sunny_w);
+                                break;
+                            case "few clouds": //серые тучки, но с солнышком кек
+                            case "scattered clouds":  //серые тучки без грозы(без черых тучек)
+                            case "broken clouds":
+                            case "overcast clouds": //с черными тучками!
+                                gifBack.setImageResource(R.drawable.cloudy_w);//overcast n broker have same icon
+                                break;
+                            case "light rain": //слабенький дождь
+                            case "moderate rain": //умеренный дождь
+                                gifBack.setImageResource(R.drawable.snowy_w); //потом изменим на rainy(когда Аня нарисует кек)
+                                break;
+                        }
+                        isThemeChanged = true;
+                        findViewById(R.id.layoutPopUpWindow).setVisibility(View.INVISIBLE);
+                    }
+                });
+
+            }});
 
         //потом переделаю, чтобы оновсе отображалось не в текствью, а в ресайклервью
 
@@ -97,14 +171,14 @@ public class WeatherActivity extends AppCompatActivity {
 
 
 
-//        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-//            @Override
-//            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-//                getWeather();
-////                saveWeather();
-//                return false;
-//            }
-//        });
+        inputCity.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                getWeather();
+//                saveWeather();
+                return false;
+            }
+        });
 
         inputCity.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
@@ -161,7 +235,9 @@ public class WeatherActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_alarm:
-                        startActivity(new Intent(getApplicationContext(), AlarmActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), AlarmOnActivity.class);
+                        intent.putExtra("description", descriptionT);
+                        startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_notes:
@@ -238,6 +314,9 @@ public class WeatherActivity extends AppCompatActivity {
 
                     JSONObject jsonObjectWeather = jsonArray.getJSONObject(0);
                     String description = jsonObjectWeather.getString("description");
+
+                    descriptionT = description;
+
                     String icon = jsonObjectWeather.getString("icon");
 
                     JSONObject jsonObjectMain = jsonResponse.getJSONObject("main");
