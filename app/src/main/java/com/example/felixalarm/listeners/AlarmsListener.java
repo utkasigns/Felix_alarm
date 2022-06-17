@@ -1,10 +1,10 @@
 package com.example.felixalarm.listeners;
-
-import com.example.felixalarm.entities.Alarm;
+import android.view.View;
 
 public interface AlarmsListener {
-    public static void onAlarmClicked(String alarm, int position) {
-
+    static void onAlarmClicked(String s, int position) {
     }
+
+    void onAlarmClicked(View alarm, int position);
 
 }

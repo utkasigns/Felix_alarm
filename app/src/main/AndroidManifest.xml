@@ -46,7 +46,8 @@
             android:exported="false" />
 
         <activity
-            android:name=".activities.AlarmOnActivity"/>
+            android:name=".activities.AlarmOnActivity"
+            android:exported="true"/>
         <activity
             android:name=".activities.CreateAlarmActivity"
             android:screenOrientation="fullSensor"

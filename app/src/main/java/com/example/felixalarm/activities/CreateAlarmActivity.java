@@ -104,15 +104,15 @@ public class CreateAlarmActivity extends AppCompatActivity {
         alarmBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onBackPressed();
-            }
-        });
-
+                Intent i= new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+                startActivity(i);}
+            });
         alarmName=findViewById(R.id.alarmName);
         alarmSave=findViewById(R.id.alarmSave);
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 saveAlarm();
             }
         });
@@ -122,16 +122,15 @@ public class CreateAlarmActivity extends AppCompatActivity {
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String settingAlarmName=alarmName.getText().toString();
-
-                Context context=CreateAlarmActivity.this;
-                Intent i=new Intent(context,AlarmActivity.class);
+                String name=alarmName.getText().toString();
+                Intent i= new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+                startActivity(i);}
                 //...............................................
                 //тут мне нужно как раз таки передать данные чтобы они сохранялись
 //                    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
 //                    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-                    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-            }
+//                    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
+//            }
             //.....................................................................................
         });
 
@@ -154,7 +153,6 @@ public class CreateAlarmActivity extends AppCompatActivity {
 
 
     }
-
 
 
     private PendingIntent getAlarmInfoPendingIntend(){

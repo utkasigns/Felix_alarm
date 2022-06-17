@@ -1,6 +1,7 @@
 package com.example.felixalarm.adapters;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,61 +13,109 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.activities.AlarmActivity;
+import com.example.felixalarm.entities.Alarm;
 import com.example.felixalarm.listeners.AlarmsListener;
 
 import java.util.List;
 
-public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder> {
-    private List<String> alarms;
-    private List<String> times;
-    private List<Switch> switches;
+public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewHolder> {
+   private List<Alarm> alarmList;
+   private AlarmsListener alarmsListener;
+   private Context context;
 
-    public AlarmsAdapter(List<String> alarms,List<String> times,List<Switch> switches){
-        this.alarms=alarms;
-        this.times=times;
-        this.switches=switches;
+
+    public AlarmsAdapter(List<Alarm> alarmList, AlarmActivity alarmActivity) {
+        this.alarmList=alarmList;
+        this.context=context;
     }
 
     @NonNull
     @Override
-    public AlarmsViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new AlarmsViewHolder(
-       LayoutInflater.from(parent.getContext()).inflate(
-                R.layout.uniwersal_alarm,parent,false
-            )
-        );
-
+    public AlarmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.uniwersal_alarm,parent,false);
+        AlarmViewHolder holder=new AlarmViewHolder(view);
+        return holder;
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlarmsViewHolder holder,@SuppressLint("RecyclerView") final int position) {
-        holder.alarmSettenName.setText(alarms.get(position));
-        holder.alarmSettenTime.setText(times.get(position));
-        holder.layoutAlarm.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlarmsListener.onAlarmClicked(alarms.get(position),position);
-            }
-        });
+    public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
+        holder.name.setText(alarmList.get(position).getName());
+        holder.time.setText(alarmList.get(position).getTime());
+//        +":"+getMinute()
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return alarmList.size();
     }
 
-    public class AlarmsViewHolder  extends RecyclerView.ViewHolder{
-        TextView alarmSettenTime,alarmSettenName;
 
-        @SuppressLint("UseSwitchCompatOrMaterialCode")
-        Switch switchAlarm;
-        ConstraintLayout layoutAlarm;
+    public  class AlarmViewHolder extends RecyclerView.ViewHolder {
+        private TextView time;
+        private TextView name;
+        private Switch active;
 
-        public AlarmsViewHolder(@NonNull View itemView) {
+        public AlarmViewHolder(View itemView) {
             super(itemView);
-            alarmSettenTime=itemView.findViewById(R.id.alarmSettenTime);
-            alarmSettenName=itemView.findViewById(R.id.alarmSettenName);
-            switchAlarm=itemView.findViewById(R.id.switchAlarm);
+            time = itemView.findViewById(R.id.alarmSettenTime);
+            name = itemView.findViewById(R.id.alarmSettenName);
+            active = itemView.findViewById(R.id.switchAlarm);
+
         }
-    }
-}
+
+
+//    @Override
+//    public AlarmsViewHolder onCreateViewHolder( ViewGroup parent, int viewType) {
+//        View itemView=mInflater.inflate(R.layout.uniwersal_alarm,parent,false);
+//        return new AlarmsViewHolder( itemView  );
+//    }
+
+//    @Override
+//    public void onBindViewHolder(AlarmsViewHolder holder, final int position) {
+//            if (alarms!=null){
+//        holder.alarmSettenName.setText(alarms.get(position));
+//        holder.alarmSettenTime.setText(times.get(position));
+//        holder.switchAlarm.setChecked(alarms.getActive());
+//        }
+//        else{
+//                    holder.alarmSettenName.setText("No Alarms");
+//
+//                }
+////    }
+//      void setAlarmClickListener(AlarmsListener listener) {
+//            this.alarmClickListener=listener;
+//        }
+//
+//    public List<Switch> getSwitches() {
+//        return switches;
+//    }
+//
+//        public TextView getTime() {
+//            return time;
+//        }
+//
+//        public TextView getName() {
+//            return name;
+//        }
+//
+//        public Switch getActive() {
+//            return active;
+//        }
+//
+//        public class AlarmsViewHolder  extends RecyclerView.ViewHolder{
+//        TextView alarmSettenTime,alarmSettenName;
+//
+//        @SuppressLint("UseSwitchCompatOrMaterialCode")
+//        Switch switchAlarm;
+//        ConstraintLayout layoutAlarm;
+//
+//        public AlarmsViewHolder(@NonNull View itemView) {
+//            super(itemView);
+//            alarmSettenTime=itemView.findViewById(R.id.alarmSettenTime);
+//            alarmSettenName=itemView.findViewById(R.id.alarmSettenName);
+//            switchAlarm=itemView.findViewById(R.id.switchAlarm);
+//        }
+//    }
+//
+    }}

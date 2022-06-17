@@ -1,25 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@drawable/snow_backgroung"
-    android:orientation="vertical"
 
+    android:orientation="vertical"
     tools:context=".activities.AlarmOnActivity">
 
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/felix_foto" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="50dp"
         android:layout_marginStart="100dp"
-        android:text="08:25"
-        android:textSize="80dp"
+        android:layout_marginTop="50dp"
         android:fontFamily="@font/ubuntu_bold"
+        android:gravity="center_horizontal"
+        android:text="08:25"
         android:textColor="@color/white"
+        android:textSize="80dp"
         tools:layout_editor_absoluteX="179dp"
         tools:layout_editor_absoluteY="182dp" />
 
@@ -28,10 +33,10 @@
         android:layout_width="137dp"
         android:layout_height="136dp"
         android:layout_marginStart="140dp"
-        android:layout_marginTop="300dp"
+        android:layout_marginTop="370dp"
         android:background="@drawable/button_snow_alarm_off"
         tools:layout_editor_absoluteX="9dp"
         tools:layout_editor_absoluteY="16dp" />
 
 
-</LinearLayout>
+</FrameLayout>

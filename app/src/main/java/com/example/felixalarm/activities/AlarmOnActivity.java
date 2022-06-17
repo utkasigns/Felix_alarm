@@ -38,6 +38,10 @@ public class AlarmOnActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ringtone.stop();
+                Intent i= new Intent(AlarmOnActivity.this,AlarmActivity.class);
+                startActivity(i);
+
+                ;
 
             }
         });
