@@ -33,7 +33,7 @@ public class AlarmActivity extends AppCompatActivity  {
     public static final int REQUEST_CODE_SHOW_ALARMS = 3;
 
     private List<String> alarmList;
-    private List<Integer> timeList;
+    private List<String> timeList;
     private List<Switch> switchList;
 
     AlarmClock alarmClock;
@@ -58,7 +58,7 @@ public class AlarmActivity extends AppCompatActivity  {
                     startActivity(i);}
 
             });
-        alarmRecyclerView=findViewById(R.id.alarmRecyclerView);
+        alarmRecyclerView=findViewById(R.id.alarmRecycleView);
         AlarmsAdapter alarmsAdapter=new AlarmsAdapter(alarmList,timeList,switchList);
         alarmRecyclerView.setAdapter(alarmsAdapter);
         alarmRecyclerView.setLayoutManager(new LinearLayoutManager(this));

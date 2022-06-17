@@ -1,5 +1,6 @@
 package com.example.felixalarm.adapters;
 
+import android.annotation.SuppressLint;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -7,18 +8,20 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.listeners.AlarmsListener;
 
 import java.util.List;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsViewHolder> {
     private List<String> alarms;
-    private List<Integer> times;
+    private List<String> times;
     private List<Switch> switches;
 
-    public AlarmsAdapter(List<String> alarms,List<Integer> times,List<Switch> switches){
+    public AlarmsAdapter(List<String> alarms,List<String> times,List<Switch> switches){
         this.alarms=alarms;
         this.times=times;
         this.switches=switches;
@@ -36,13 +39,15 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AlarmsViewHolder holder, final int position) {
-        //.....................................................................................
-        // тут надо полученные переменные задать и еще я не уверенна надо ли кнопку свитч где
-        // то тут упоминать
-        holder.alarmSettenName.setText();
-        holder.alarmSettenTime.setText();
-        //.....................................................................................
+    public void onBindViewHolder(@NonNull AlarmsViewHolder holder,@SuppressLint("RecyclerView") final int position) {
+        holder.alarmSettenName.setText(alarms.get(position));
+        holder.alarmSettenTime.setText(times.get(position));
+        holder.layoutAlarm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlarmsListener.onAlarmClicked(alarms.get(position),position);
+            }
+        });
     }
 
     @Override
@@ -52,7 +57,10 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmsView
 
     public class AlarmsViewHolder  extends RecyclerView.ViewHolder{
         TextView alarmSettenTime,alarmSettenName;
+
+        @SuppressLint("UseSwitchCompatOrMaterialCode")
         Switch switchAlarm;
+        ConstraintLayout layoutAlarm;
 
         public AlarmsViewHolder(@NonNull View itemView) {
             super(itemView);
