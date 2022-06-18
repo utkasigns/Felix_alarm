@@ -13,7 +13,7 @@ import java.io.Serializable;
 @Entity(tableName = "alarms")
 
 public class Alarm implements Serializable  {
-    AlarmListApplication alarmListApplication;
+//    AlarmListApplication alarmListApplication;
 
 
     @PrimaryKey(autoGenerate = true)

@@ -12,7 +12,7 @@ import java.util.List;
 
 @Dao
 public interface AlarmDao {
-    @Delete
+
 
     @Query("SELECT * FROM alarms ORDER BY id ASC")
     List<Alarm> getAllAlarms();
@@ -20,8 +20,8 @@ public interface AlarmDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlarm(Alarm alarm);
 
-
-    void deleteAlarm(Alarm alarm);
+//    @Delete
+//    void deleteAlarm(Alarm alarm);
 
 
 }
