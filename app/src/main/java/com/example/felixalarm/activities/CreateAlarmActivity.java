@@ -40,6 +40,7 @@ public class CreateAlarmActivity extends AppCompatActivity {
     AlarmListApplication alarmListApplication = (AlarmListApplication) this.getApplication();
 
     String dateT;
+    String timeExtra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,21 +67,26 @@ public class CreateAlarmActivity extends AppCompatActivity {
                                         "HH:mm"
                                 );
                                 try {
+//                                    Date date = f24Hours.parse(time);
+//                                    //инициализируем 12ти часовой формат
+//                                    SimpleDateFormat f12Hours = new SimpleDateFormat(
+//                                            "hh:mm aa"
+//                                    );
+//                                    //задаем выбранное время в текст вью
+//                                    timer1.setText(f12Hours.format(date));
+//                                    dateT = f12Hours.format(date);
+
                                     Date date = f24Hours.parse(time);
-                                    //инициализируем 12ти часовой формат
-                                    SimpleDateFormat f12Hours = new SimpleDateFormat(
-                                            "hh:mm aa"
-                                    );
-                                    //задаем выбранное время в текст вью
-                                    timer1.setText(f12Hours.format(date));
-                                    dateT = f12Hours.format(date);
+                                    String timeT = hour1 + ":" + minute1;
+                                    timeExtra = timeT;
+                                    timer1.setText(timeT);
 
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
 
                             }
-                        }, 12, 0, false
+                        }, 24, 0, false
                 );
                 timePickerDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 //отображаем предыдущее выбранное время
@@ -116,6 +122,9 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 }
                 String name = alarmName.getText().toString();
                 Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+                i.putExtra("alarmHours", hour1);
+                i.putExtra("alarmMinutes", minute1);
+                i.putExtra("time", timeExtra);
                 startActivity(i);
 
 

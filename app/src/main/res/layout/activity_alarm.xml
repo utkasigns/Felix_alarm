@@ -8,7 +8,7 @@
     tools:context=".activities.AlarmActivity">
 
     <TextView
-        android:id="@+id/textMyNotes"
+        android:id="@+id/textMyAlarm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -51,7 +51,7 @@
         android:id="@+id/imageAddAlarm"
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_55sdp"
-        android:layout_alignTop="@id/textMyNotes"
+        android:layout_alignTop="@id/textMyAlarm"
         android:layout_marginTop="83dp"
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="40dp"
@@ -66,7 +66,7 @@
         android:src="@drawable/ic_add_outline"
         app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMyNotes"
+        app:layout_constraintTop_toBottomOf="@+id/textMyAlarm"
         app:tint="@color/orangeLight" />
 
     <TextClock
@@ -82,7 +82,7 @@
         app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
         app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
+        app:layout_constraintTop_toBottomOf="@+id/textMyAlarm" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmRecycleView"
