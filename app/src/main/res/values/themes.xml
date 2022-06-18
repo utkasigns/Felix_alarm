@@ -13,4 +13,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">@null</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="TimePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/orange</item>
+        <item name="colorPrimaryDark">@color/orangeLight</item>
+        <item name="colorPrimary">@color/colorOrangeDark</item>
+    </style>
+
 </resources>

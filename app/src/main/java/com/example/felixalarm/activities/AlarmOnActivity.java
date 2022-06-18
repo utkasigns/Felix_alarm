@@ -11,6 +11,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
+import android.widget.TextClock;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,14 +30,16 @@ public class AlarmOnActivity extends AppCompatActivity {
     private ImageView buttonAlarmOff;
     TextView textTime;
     int count = 0;
+    TextClock currentTime;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm_on);
         buttonAlarmOff=findViewById(R.id.button_alarm_off);
-        textTime = findViewById(R.id.textView2);
+
         gifBack = findViewById(R.id.gifBackOnAlarm);
+        currentTime = findViewById(R.id.textCurrentTime);
 
 
         Intent i = getIntent();
@@ -78,7 +81,7 @@ public class AlarmOnActivity extends AppCompatActivity {
                         buttonAlarmOff.setImageResource(R.drawable.button_rain);
                         break;
                 }
-            } else if (isThemeChanged == true){
+            } else {
                 gifBack.setAlpha(0.9F);
                 switch (description) {
                     case "clear sky":
@@ -102,7 +105,7 @@ public class AlarmOnActivity extends AppCompatActivity {
             }
         } else {
             gifBack.setImageResource(R.drawable.background_create_alarm);
-            textTime.setTextColor(Color.BLACK);
+            currentTime.setTextColor(Color.BLACK);
 
         }
 

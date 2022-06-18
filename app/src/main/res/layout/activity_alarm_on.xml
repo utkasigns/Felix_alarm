@@ -24,19 +24,31 @@
             android:background="@drawable/felix_foto"
             android:scaleType="fitXY"/>
 
-        <TextView
-            android:id="@+id/textView2"
+        <TextClock
+            android:id="@+id/textCurrentTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/ubuntu_bold"
-            android:gravity="center_horizontal"
-            android:text="08:25"
+            android:textSize="60dp"
             android:textColor="@color/white"
-            android:textSize="80dp"
-            tools:layout_editor_absoluteX="179dp"
-            tools:layout_editor_absoluteY="182dp" />
+            android:fontFamily="@font/ubuntu_bold"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            />
+
+
+        <!--        <TextView-->
+<!--            android:id="@+id/textView2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginStart="100dp"-->
+<!--            android:layout_marginTop="50dp"-->
+<!--            android:fontFamily="@font/ubuntu_bold"-->
+<!--            android:gravity="center_horizontal"-->
+<!--            android:text="08:25"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textSize="80dp"-->
+<!--            tools:layout_editor_absoluteX="179dp"-->
+<!--            tools:layout_editor_absoluteY="182dp" />-->
 
         <ImageView
             android:id="@+id/button_alarm_off"

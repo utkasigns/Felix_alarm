@@ -17,6 +17,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextClock;
 import android.widget.TextView;
+import android.widget.TimePicker;
 
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.AlarmsAdapter;
@@ -50,7 +51,7 @@ public class AlarmActivity extends AppCompatActivity  {
     TextClock currentTime;
     boolean isOpened;
 
-    NotesActivity notesActivity;
+    TimePicker alarmTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +60,7 @@ public class AlarmActivity extends AppCompatActivity  {
 
         alarmList=AlarmListApplication.getAlarmList();
         currentTime = findViewById(R.id.textClock);
+        alarmTime = findViewById(R.id.timePicker);
 
         Intent intent = getIntent();
         String descriptionT = intent.getStringExtra("description");
@@ -81,36 +83,33 @@ public class AlarmActivity extends AppCompatActivity  {
 
                 }
 
-
-
             }
         },0,1000);
 
         TextView textMyNotes = findViewById(R.id.textMyNotes);
-        textMyNotes.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                //метод по срабатыванию будильника должен быть!
-                isOpened = true;
-
-//                notesActivity.checkNotes(isOpened);
+//        textMyNotes.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
 //
-//                Intent i2 = new Intent(getApplicationContext(), NotesActivity.class);
-//                i2.putExtra("flag", isOpened);
-//                startActivity(i2);
+//                //метод по срабатыванию будильника должен быть!
+//                isOpened = true;
+//
+////                notesActivity.checkNotes(isOpened);
+////
+////                Intent i2 = new Intent(getApplicationContext(), NotesActivity.class);
+////                i2.putExtra("flag", isOpened);
+////                startActivity(i2);
+//
+//                Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
+//                intent1.putExtra("description", descriptionT);
+//                intent1.putExtra("theme", isThemeChanged);
+//
+//                startActivity(intent1);
+//
+//            }
+//        });
 
-                Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
-                intent1.putExtra("description", descriptionT);
-                intent1.putExtra("theme", isThemeChanged);
 
-                startActivity(intent1);
-
-            }
-        });
-
-
-        currentTime = findViewById(R.id.textClock);
 //        String currentTimeT = currentTime + " дп";
 //
 //        Timer t = new Timer();
@@ -144,15 +143,15 @@ public class AlarmActivity extends AppCompatActivity  {
 
 
 
-
-        alarmRecyclerView = findViewById(R.id.alarmRecycleView);
-        alarmRecyclerView.setHasFixedSize(true);
-
-        alarmManager= new LinearLayoutManager(this);
-        alarmRecyclerView.setLayoutManager(alarmManager);
-
-        alarmsAdapter=new AlarmsAdapter(alarmList,AlarmActivity.this);
-        alarmRecyclerView.setAdapter(alarmsAdapter);
+//
+//        alarmRecyclerView = findViewById(R.id.alarmRecycleView);
+//        alarmRecyclerView.setHasFixedSize(true);
+//
+//        alarmManager= new LinearLayoutManager(this);
+//        alarmRecyclerView.setLayoutManager(alarmManager);
+//
+//        alarmsAdapter=new AlarmsAdapter(alarmList,AlarmActivity.this);
+//        alarmRecyclerView.setAdapter(alarmsAdapter);
 
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
@@ -183,13 +182,22 @@ public class AlarmActivity extends AppCompatActivity  {
     }
 
 
-        public String AlarmTime() {
+    public String AlarmTime() {
 
-        Intent intent = getIntent();
-        String alarmTime =  intent.getStringExtra("time");
+        Integer alarmHours = alarmTime.getCurrentHour();
+        Integer alarmMinutes = alarmTime.getCurrentMinute();
 
+        String stringAlarmTime;
 
-        return alarmTime;
+        if (alarmHours>12) {
+            alarmHours = alarmHours - 12;
+            stringAlarmTime = alarmHours.toString().concat(":").concat(alarmMinutes.toString())
+                    .concat(" PM");
+        } else {
+            stringAlarmTime = alarmHours.toString().concat(":").concat(alarmMinutes.toString())
+                    .concat(" AM");
+        }
+        return stringAlarmTime;
     }
 
 //     private void getAlarms(){

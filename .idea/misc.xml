@@ -45,7 +45,7 @@
         <entry key="app/src/main/res/drawable/ic_web_link.xml" value="0.1" />
         <entry key="app/src/main/res/drawable/item_selector.xml" value="0.10277777777777777" />
         <entry key="app/src/main/res/drawable/rounded_corner.xml" value="0.13148148148148148" />
-        <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.11854103343465046" />
+        <entry key="app/src/main/res/layout/activity_alarm.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_alarm_on.xml" value="0.11799753595068067" />
         <entry key="app/src/main/res/layout/activity_create_alarm.xml" value="0.10106382978723404" />
         <entry key="app/src/main/res/layout/activity_create_note.xml" value="0.1" />

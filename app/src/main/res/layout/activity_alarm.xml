@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
+    android:background="@drawable/background_create_alarm"
     tools:context=".activities.AlarmActivity">
 
     <TextView
@@ -12,6 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="24dp"
         android:background="@color/white"
@@ -52,9 +53,6 @@
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_55sdp"
         android:layout_alignTop="@id/textMyAlarm"
-        android:layout_marginTop="83dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="40dp"
         android:background="@drawable/kitty_icon"
         android:contentDescription="@string/app_name"
         android:paddingStart="@dimen/_12sdp"
@@ -64,40 +62,35 @@
         android:paddingBottom="@dimen/_4ssp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_add_outline"
-        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/textMyAlarm"
         app:layout_constraintTop_toBottomOf="@+id/textMyAlarm"
+        app:layout_constraintBottom_toBottomOf="@id/textClock"
         app:tint="@color/orangeLight" />
 
     <TextClock
         android:id="@+id/textClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
         android:layout_marginEnd="72dp"
-        android:layout_marginBottom="197dp"
         android:text="@string/What_time_is_it"
-        android:textSize="55dp"
-        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
+        android:textSize="50dp"
+        android:fontFamily="@font/ubuntu_bold"
+        android:textColor="@color/gray"
+        android:background="@color/white"
         app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@id/textMyAlarm"
         app:layout_constraintTop_toBottomOf="@+id/textMyAlarm" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/alarmRecycleView"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginStart="@dimen/_2sdp"
-        android:layout_marginEnd="@dimen/_2sdp"
-        android:layout_marginBottom="20dp"
-        android:clipToPadding="false"
-        android:paddingStart="0dp"
-        android:paddingEnd="@dimen/_12sdp"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        tools:layout_editor_absoluteX="41dp">
+    <TimePicker
+        android:id="@+id/timePicker"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:theme="@style/TimePickerTheme"
+        android:layout_marginBottom="-10dp"
+        app:layout_constraintBottom_toTopOf="@id/bottom_navigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 
-    </androidx.recyclerview.widget.RecyclerView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
