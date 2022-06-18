@@ -95,11 +95,11 @@ public class WeatherActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         boolean isOpened = intent.getBooleanExtra("flag", false);
+
         if (isOpened == true) {
             Intent i = new Intent(getApplicationContext(), AlarmOnActivity.class);
             startActivity(i);
         }
-
 
         settingsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -250,10 +250,13 @@ public class WeatherActivity extends AppCompatActivity {
                         startActivity(intent);
                         overridePendingTransition(0, 0);
 
-
                         return true;
                     case R.id.nav_notes:
-                        startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+//                        startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+                        Intent intent2 = new Intent(getApplicationContext(), NotesActivity.class);
+                        intent2.putExtra("description", descriptionT);
+                        intent2.putExtra("theme", isThemeChanged);
+                        startActivity(intent2);
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_weather:
@@ -398,19 +401,6 @@ public class WeatherActivity extends AppCompatActivity {
                             break;
 
                             //need to add snowy weather
-//                        case "":
-//                              iconImage.setImageResource(R.drawable.);
-//                              gifBack.setImageResource(R.drawable.);
-//                              break;
-//                        case "":
-//                              iconImage.setImageResource(R.drawable.);
-//                              gifBack.setImageResource(R.drawable.);
-//                              break;
-//                        case "":
-//                              iconImage.setImageResource(R.drawable.);
-//                              gifBack.setImageResource(R.drawable.);
-//                              break;
-
                     }
 
                 } catch (JSONException e) {

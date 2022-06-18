@@ -7,7 +7,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.annotation.SuppressLint;
-import android.content.AsyncQueryHandler;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -42,6 +41,7 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
     
 
     private int noteClickedPosition = -1;
+    int notesAmount;
 
 
 
@@ -49,6 +49,14 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notes);
+
+        Intent intent = getIntent();
+        String description = intent.getStringExtra("description");
+        boolean isThemeChanged = intent.getBooleanExtra("theme", false);
+
+        Intent i = getIntent();
+        boolean isOpened = i.getBooleanExtra("flag", false);
+
 
         ImageView imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
         imageAddNoteMain.setOnClickListener(new View.OnClickListener() {
@@ -101,7 +109,10 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_alarm:
-                        startActivity(new Intent(getApplicationContext(), AlarmActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
+                        intent.putExtra("description", description);
+                        intent.putExtra("theme", isThemeChanged);
+                        startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_notes:
@@ -114,6 +125,24 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
                 return false;
             }
         });
+
+
+        if (isOpened == true) {
+            notesAmount = noteList.size();
+            Log.i("notesA" , String.valueOf(noteList.size()));
+
+            Intent i2 = new Intent(getApplicationContext(), AlarmOnActivity.class);
+            i2.putExtra("size", notesAmount);
+            startActivity(i2);
+        }
+    }
+    public int checkNotes(boolean isOpened) {
+
+        if (isOpened == true) {
+            notesAmount = noteList.size();
+        }
+        return notesAmount;
+
     }
 
     @Override

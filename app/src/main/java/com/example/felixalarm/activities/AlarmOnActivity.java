@@ -12,6 +12,7 @@ import android.view.animation.AnimationUtils;
 import android.view.animation.TranslateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -37,6 +38,9 @@ public class AlarmOnActivity extends AppCompatActivity {
         textTime = findViewById(R.id.textView2);
         gifBack = findViewById(R.id.gifBackOnAlarm);
 
+
+        Intent i = getIntent();
+        int notesAmount = i.getIntExtra("size",0);
 
         Intent intent = getIntent();
         String description = intent.getStringExtra("description");
@@ -199,8 +203,25 @@ public class AlarmOnActivity extends AppCompatActivity {
 
                     } else {
                         ringtone.stop();
-                        Intent i= new Intent(AlarmOnActivity.this,AlarmActivity.class);
+
+
+                        Intent i = new Intent(AlarmOnActivity.this, NotesActivity.class);
+                        setContentView(R.layout.activity_notes);
+
+                        String text = "It's your notes! Don't forget to read them!";
+                        Toast.makeText(AlarmOnActivity.this, text, Toast.LENGTH_LONG).show();
                         startActivity(i);
+
+
+//                        Intent i;
+//                        if (notesAmount != 0) {
+//                            i = new Intent(AlarmOnActivity.this, NotesActivity.class);
+//                            String text = "Now you have " + notesAmount + " notes! Dont forget to read them!";
+//                            Toast.makeText(AlarmOnActivity.this, text, Toast.LENGTH_LONG).show();
+//                        } else {
+//                            i = new Intent(AlarmOnActivity.this, AlarmActivity.class);
+//                        }
+//                        startActivity(i);
 
                     }
                 }

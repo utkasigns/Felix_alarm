@@ -50,6 +50,8 @@ public class AlarmActivity extends AppCompatActivity  {
     TextClock currentTime;
     boolean isOpened;
 
+    NotesActivity notesActivity;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -68,9 +70,17 @@ public class AlarmActivity extends AppCompatActivity  {
 
                 //метод по срабатыванию будильника должен быть!
                 isOpened = true;
+
+//                notesActivity.checkNotes(isOpened);
+//
+//                Intent i2 = new Intent(getApplicationContext(), NotesActivity.class);
+//                i2.putExtra("flag", isOpened);
+//                startActivity(i2);
+
                 Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
                 intent1.putExtra("description", descriptionT);
                 intent1.putExtra("theme", isThemeChanged);
+
                 startActivity(intent1);
 
             }
@@ -132,8 +142,10 @@ public class AlarmActivity extends AppCompatActivity  {
                     case R.id.nav_alarm:
                         return true;
                     case R.id.nav_notes:
-                        startActivity(new Intent(getApplicationContext(), NotesActivity.class));
+                        Intent intent1 = new Intent(getApplicationContext(), NotesActivity.class);
+                        intent1.putExtra("flag", isOpened);
                         overridePendingTransition(0, 0);
+                        startActivity(intent1);
                         return true;
                     case R.id.nav_weather:
                         Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
