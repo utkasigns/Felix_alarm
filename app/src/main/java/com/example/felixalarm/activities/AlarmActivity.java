@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextClock;
 
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.AlarmsAdapter;
@@ -30,6 +31,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class AlarmActivity extends AppCompatActivity  {
     public static final int REQUEST_CODE_ADD_ALARM = 1;
@@ -46,12 +49,34 @@ public class AlarmActivity extends AppCompatActivity  {
 
     private int alarmClickedPosition = -1;
 
+    TextClock currentTime;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
 
         alarmList=AlarmListApplication.getAlarmList();
+
+        currentTime = findViewById(R.id.textClock);
+        String currentTimeT = currentTime + " дп";
+
+        Timer t = new Timer();
+        t.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                Intent intent = getIntent();
+                String date = intent.getStringExtra("date");
+
+                if (currentTimeT.equals(date)) {
+                    Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
+                    startActivity(intent1);
+
+
+                }
+            }
+        },0, 1000);
+
 
         ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
         imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {

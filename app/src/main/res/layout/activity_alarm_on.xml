@@ -3,11 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/snow_backgroung"
-
     android:orientation="vertical"
     tools:context=".activities.AlarmOnActivity">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifBackOnAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/snowy_w"
+        android:scaleType="fitXY"/>
 
     <ImageView
         android:layout_width="match_parent"
