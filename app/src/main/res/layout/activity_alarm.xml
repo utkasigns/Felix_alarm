@@ -11,15 +11,18 @@
         android:id="@+id/textMyNotes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/_12sdp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="@dimen/_20sdp"
-        android:layout_marginEnd="@dimen/_12sdp"
+        android:layout_marginBottom="24dp"
         android:background="@color/white"
         android:fontFamily="@font/ubuntu_bold"
         android:includeFontPadding="false"
         android:text="@string/my_alarm"
         android:textColor="@color/orange"
         android:textSize="@dimen/_20ssp"
+        app:layout_constraintBottom_toTopOf="@+id/textView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
@@ -39,7 +42,6 @@
         app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="unlabeled"
         app:menu="@menu/bottom_menu"
-
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <!--Привет от Ани ;3      -->
@@ -50,9 +52,9 @@
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_55sdp"
         android:layout_alignTop="@id/textMyNotes"
-        android:layout_marginTop="169dp"
-        android:layout_marginEnd="36dp"
-        android:layout_marginBottom="66dp"
+        android:layout_marginTop="83dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="140dp"
         android:background="@drawable/kitty_icon"
         android:contentDescription="@string/app_name"
         android:paddingStart="@dimen/_12sdp"
@@ -72,11 +74,13 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="54dp"
-        android:layout_marginBottom="179dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="197dp"
         android:text="@string/What_time_is_it"
         android:textSize="55dp"
         app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
+        app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
 
@@ -84,11 +88,11 @@
         android:id="@+id/alarmRecycleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="28dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent">
+        tools:layout_editor_absoluteX="-15dp"
+        >
 
     </androidx.recyclerview.widget.RecyclerView>
 
