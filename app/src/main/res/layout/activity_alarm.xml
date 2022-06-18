@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="24dp"
         android:background="@color/white"
         android:fontFamily="@font/ubuntu_bold"
@@ -54,7 +54,7 @@
         android:layout_alignTop="@id/textMyNotes"
         android:layout_marginTop="83dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/kitty_icon"
         android:contentDescription="@string/app_name"
         android:paddingStart="@dimen/_12sdp"
@@ -81,18 +81,20 @@
         android:textSize="55dp"
         app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
         app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        tools:layout_editor_absoluteX="-15dp"
-        >
+        android:layout_height="0dp"
+        android:layout_marginBottom="20dp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_12sdp"
+        app:layout_constraintTop_toBottomOf="@id/imageAddAlarm"
+        tools:layout_editor_absoluteX="5dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 

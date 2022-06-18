@@ -7,7 +7,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp"
-    android:background="@drawable/bachground_create_alarm"
+    android:background="@drawable/background_create_alarm"
     tools:context=".activities.CreateAlarmActivity">
 
     <TextView

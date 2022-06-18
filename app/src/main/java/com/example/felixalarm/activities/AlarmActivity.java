@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.nfc.Tag;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.AlarmClock;
@@ -19,11 +18,8 @@ import android.widget.ImageView;
 
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.AlarmsAdapter;
-//import com.example.felixalarm.entities.Alarm;
-import com.example.felixalarm.database.AlarmsDatabase;
-import com.example.felixalarm.database.NotesDatabase;
 import com.example.felixalarm.entities.Alarm;
-import com.example.felixalarm.entities.Note;
+import com.example.felixalarm.database.AlarmsDatabase;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
@@ -67,6 +63,9 @@ public class AlarmActivity extends AppCompatActivity  {
                 }
 
             });
+        getAlarms();
+
+
 
 
         alarmRecyclerView = findViewById(R.id.alarmRecycleView);
@@ -100,6 +99,25 @@ public class AlarmActivity extends AppCompatActivity  {
                 return false;
             }
         });}
+
+     private void getAlarms(){
+        class GetAlarmsTask extends AsyncTask<Void, Void, List<Alarm>>{
+            @Override
+            protected List<Alarm> doInBackground(Void... voids) {
+                return AlarmsDatabase
+                        .getDatabase(getApplicationContext())
+                        .alarmDao().getAllAlarms();
+            }
+
+            @Override
+            protected void onPostExecute(List<Alarm> alarms) {
+                super.onPostExecute(alarms);
+                Log.d("MY_ALARMS",alarms.toString());
+            }
+        }
+        new GetAlarmsTask().execute();
+
+     }
 
     public void onAlarmClicked(Alarm alarm, int position) {
         alarmClickedPosition = position;

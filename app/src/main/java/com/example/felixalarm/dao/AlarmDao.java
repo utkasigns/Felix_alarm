@@ -13,13 +13,15 @@ import java.util.List;
 @Dao
 public interface AlarmDao {
     @Delete
-    void deleteAlarm(Alarm alarm);
+
+    @Query("SELECT * FROM alarms ORDER BY id ASC")
+    List<Alarm> getAllAlarms();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAlarm(Alarm alarm);
 
-    @Query("SELECT * FROM alarms ORDER BY id ASC")
-    List<Alarm> getAllAlarms();
+
+    void deleteAlarm(Alarm alarm);
 
 
 }

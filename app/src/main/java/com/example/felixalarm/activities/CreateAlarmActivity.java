@@ -10,6 +10,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.database.AlarmsDatabase;
 import com.example.felixalarm.entities.Alarm;
 
 import java.text.ParseException;
@@ -87,23 +89,6 @@ public class CreateAlarmActivity extends AppCompatActivity {
             }
         });
 
-
-        //....................................................................................
-        //здесь  я тоже забыла чет дописать и теперь выходит ошибка
-
-        //я перенесла эти 2 метода после метода ОнКриэйт, а то там были методы в методе кхехе
-//        private PendingIntent getAlarmInfoPendingIntend(){
-//            Intent alarmInfoIntend =new Intent(this,AlarmActivity.class);
-//            alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-//            return; PendingIntent.getActivity(this,0,alarmInfoIntend,PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        }
-//        private PendingIntent  getAlarmActionPendingIntend(){
-//            Intent intent=new Intent(this,AlarmOnActivity.class);
-//     }
-        //.....................................................................................
-
-
         alarmBack = findViewById(R.id.alarmBack);
         alarmBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,50 +99,61 @@ public class CreateAlarmActivity extends AppCompatActivity {
         });
         alarmName = findViewById(R.id.alarmName);
         alarmSave = findViewById(R.id.alarmSave);
-
-
-//
-//        alarmSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String name = alarmName.getText().toString();
-//                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
-        alarmName = findViewById(R.id.alarmName);
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //создаем будильник
-                 int nextId = AlarmListApplication.getNextId();
-                 final Alarm newAlarm = new Alarm(nextId,
-                         alarmName.getText().toString(),
-                        timer1.getText().toString());
-                newAlarm.setId(nextId);
-                newAlarm.setTime(timer1.getText().toString());
-                newAlarm.setName(alarmName.getText().toString());
-
-
-                //добавляем будильник в глобальный список
-
-                alarmList.add(newAlarm);
-                ++nextId;
-                AlarmListApplication.setNextId(nextId);
-
-
-                if (alarmName == null) {
+                if (alarmName.getText().toString().trim().isEmpty()) {
                     Toast.makeText(CreateAlarmActivity.this, "Alarm must have name!", Toast.LENGTH_LONG).show();
                     return;
-                } else if (timer1 == null) {
+                } else if (timer1.getText().toString().trim().isEmpty()) {
                     Toast.makeText(CreateAlarmActivity.this, "Select time for alarm!", Toast.LENGTH_LONG).show();
                     return;
                 }
 
+
+//                создаем будильник
+//                 int nextId = AlarmListApplication.getNextId();
+
+
+                 final Alarm alarm = new Alarm();
+//                newAlarm.setId(nextId);
+                alarm.setTime(timer1.getText().toString());
+                alarm.setName(alarmName.getText().toString());
+
+
+                //добавляем будильник в глобальный список
+//
+//                alarmList.add(newAlarm);
+//                ++nextId;
+//                AlarmListApplication.setNextId(nextId);
+
+
+                @SuppressLint("StaticFieldLeak")
+                class saveAlarmTask extends AsyncTask<Void, Void, Void>{
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        AlarmsDatabase.getDatabase(getApplicationContext()).alarmDao().insertAlarm(alarm);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void aVoid) {
+                        super.onPostExecute(aVoid);
+                        Intent intent=new Intent();
+                        setResult(RESULT_OK);
+                        finish();
+                    }
+                }
+
+
+                new saveAlarmTask().execute();
+
             }
+
         });
+
+
 
     }
 
