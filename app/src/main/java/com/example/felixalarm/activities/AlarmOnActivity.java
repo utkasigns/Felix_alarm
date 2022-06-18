@@ -95,7 +95,7 @@ public class AlarmOnActivity extends AppCompatActivity {
 
             }
         } else {
-            gifBack.setImageResource(R.drawable.bachground_create_alarm);
+            gifBack.setImageResource(R.drawable.background_create_alarm);
             textTime.setTextColor(Color.BLACK);
 
         }
