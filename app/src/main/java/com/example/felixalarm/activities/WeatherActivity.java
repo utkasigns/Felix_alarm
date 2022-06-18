@@ -237,6 +237,7 @@ public class WeatherActivity extends AppCompatActivity {
                     case R.id.nav_alarm:
                         Intent intent = new Intent(getApplicationContext(), AlarmOnActivity.class);
                         intent.putExtra("description", descriptionT);
+                        intent.putExtra("theme", isThemeChanged);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
                         return true;

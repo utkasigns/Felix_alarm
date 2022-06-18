@@ -37,6 +37,8 @@ public class CreateAlarmActivity extends AppCompatActivity {
     List<Alarm> alarmList;
     AlarmListApplication alarmListApplication = (AlarmListApplication) this.getApplication();
 
+    String dateT;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,6 +71,8 @@ public class CreateAlarmActivity extends AppCompatActivity {
                                     );
                                     //задаем выбранное время в текст вью
                                     timer1.setText(f12Hours.format(date));
+                                    dateT = f12Hours.format(date);
+
                                 } catch (ParseException e) {
                                     e.printStackTrace();
                                 }
@@ -113,20 +117,8 @@ public class CreateAlarmActivity extends AppCompatActivity {
             }
         });
         alarmName = findViewById(R.id.alarmName);
+
         alarmSave = findViewById(R.id.alarmSave);
-
-
-//
-//        alarmSave.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                String name = alarmName.getText().toString();
-//                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
-//                startActivity(i);
-//            }
-//        });
-
-        alarmName = findViewById(R.id.alarmName);
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -155,6 +147,10 @@ public class CreateAlarmActivity extends AppCompatActivity {
                     Toast.makeText(CreateAlarmActivity.this, "Select time for alarm!", Toast.LENGTH_LONG).show();
                     return;
                 }
+                String name = alarmName.getText().toString();
+                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+                startActivity(i);
+
 
             }
         });

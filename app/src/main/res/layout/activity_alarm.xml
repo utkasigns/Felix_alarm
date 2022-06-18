@@ -20,7 +20,6 @@
         android:text="@string/my_alarm"
         android:textColor="@color/orange"
         android:textSize="@dimen/_20ssp"
-        app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -69,20 +68,32 @@
         app:layout_constraintTop_toBottomOf="@+id/textMyNotes"
         app:tint="@color/orangeLight" />
 
-    <TextView
-        android:id="@+id/textView"
+
+    <TextClock
+        android:id="@+id/textClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="72dp"
-        android:layout_marginBottom="197dp"
         android:text="@string/What_time_is_it"
-        android:textSize="55dp"
-        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
-        app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
+        android:textSize="55sp"
+        app:layout_constraintTop_toTopOf="@id/imageAddAlarm"
+        app:layout_constraintStart_toStartOf="@id/textMyNotes"
+
+            />
+
+    <!--    <TextView-->
+<!--        android:id="@+id/textView"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="16dp"-->
+<!--        android:layout_marginTop="24dp"-->
+<!--        android:layout_marginEnd="72dp"-->
+<!--        android:layout_marginBottom="197dp"-->
+<!--        android:text="@string/What_time_is_it"-->
+<!--        android:textSize="55dp"-->
+<!--        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />-->
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmRecycleView"
