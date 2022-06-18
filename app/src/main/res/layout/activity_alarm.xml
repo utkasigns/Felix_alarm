@@ -81,7 +81,6 @@
         android:textSize="55dp"
         app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
         app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
 
@@ -89,12 +88,14 @@
         android:id="@+id/alarmRecycleView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
         android:layout_marginBottom="20dp"
         android:clipToPadding="false"
         android:paddingStart="0dp"
         android:paddingEnd="@dimen/_12sdp"
-        app:layout_constraintTop_toBottomOf="@id/imageAddAlarm"
-        tools:layout_editor_absoluteX="5dp">
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        tools:layout_editor_absoluteX="41dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
