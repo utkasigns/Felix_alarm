@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextClock;
+import android.widget.TextView;
 
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.AlarmsAdapter;
@@ -54,6 +55,7 @@ public class AlarmActivity extends AppCompatActivity  {
     private int alarmClickedPosition = -1;
 
     TextClock currentTime;
+    boolean isOpened = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,24 +64,44 @@ public class AlarmActivity extends AppCompatActivity  {
 
         alarmList=AlarmListApplication.getAlarmList();
 
-        currentTime = findViewById(R.id.textClock);
-        String currentTimeT = currentTime + " дп";
+        Intent intent = getIntent();
+        String descriptionT = intent.getStringExtra("description");
+        boolean isThemeChanged = intent.getBooleanExtra("theme", false);
 
-        Timer t = new Timer();
-        t.scheduleAtFixedRate(new TimerTask() {
+        TextView textMyNotes = findViewById(R.id.textMyNotes);
+        textMyNotes.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                Intent intent = getIntent();
-                String date = intent.getStringExtra("date");
+            public void onClick(View v) {
 
-                if (currentTimeT.equals(date)) {
-                    Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
-                    startActivity(intent1);
+                //метод по срабатыванию будильника должен быть
+                Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
+                intent1.putExtra("description", descriptionT);
+                intent1.putExtra("theme", isThemeChanged);
+                isOpened = true;
+                startActivity(intent1);
 
-
-                }
             }
-        },0, 1000);
+        });
+
+
+        currentTime = findViewById(R.id.textClock);
+//        String currentTimeT = currentTime + " дп";
+//
+//        Timer t = new Timer();
+//        t.scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                Intent intent = getIntent();
+//                String date = intent.getStringExtra("date");
+//
+//                if (currentTimeT.equals(date)) {
+//                    Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
+//                    startActivity(intent1);
+//
+//
+//                }
+//            }
+//        },0, 1000);
 
 
         ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
@@ -118,8 +140,10 @@ public class AlarmActivity extends AppCompatActivity  {
                         overridePendingTransition(0, 0);
                         return true;
                     case R.id.nav_weather:
-                        startActivity(new Intent(getApplicationContext(), WeatherActivity.class));
+                        Intent intent = new Intent(getApplicationContext(), WeatherActivity.class);
+                        intent.putExtra("flag", isOpened);
                         overridePendingTransition(0, 0);
+                        startActivity(intent);
                         return true;
                 }
                 return false;

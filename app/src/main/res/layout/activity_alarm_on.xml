@@ -6,41 +6,49 @@
     android:orientation="vertical"
     tools:context=".activities.AlarmOnActivity">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <pl.droidsonroids.gif.GifImageView
         android:id="@+id/gifBackOnAlarm"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:src="@drawable/snowy_w"
+        android:src="@drawable/rainy_w"
         android:scaleType="fitXY"/>
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/felix_foto" />
+        <ImageView
+            android:id="@+id/felix"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/felix_foto"
+            android:scaleType="fitXY"/>
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="100dp"
-        android:layout_marginTop="50dp"
-        android:fontFamily="@font/ubuntu_bold"
-        android:gravity="center_horizontal"
-        android:text="08:25"
-        android:textColor="@color/white"
-        android:textSize="80dp"
-        tools:layout_editor_absoluteX="179dp"
-        tools:layout_editor_absoluteY="182dp" />
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="50dp"
+            android:fontFamily="@font/ubuntu_bold"
+            android:gravity="center_horizontal"
+            android:text="08:25"
+            android:textColor="@color/white"
+            android:textSize="80dp"
+            tools:layout_editor_absoluteX="179dp"
+            tools:layout_editor_absoluteY="182dp" />
 
-    <ImageView
-        android:id="@+id/button_alarm_off"
-        android:layout_width="137dp"
-        android:layout_height="136dp"
-        android:layout_marginStart="140dp"
-        android:layout_marginTop="370dp"
-        android:background="@drawable/button_snow_alarm_off"
-        tools:layout_editor_absoluteX="9dp"
-        tools:layout_editor_absoluteY="16dp" />
+        <ImageView
+            android:id="@+id/button_alarm_off"
+            android:layout_width="137dp"
+            android:layout_height="136dp"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true"
+            android:layout_marginBottom="200dp"
+            android:src="@drawable/button_rain"
+            />
+
+    </RelativeLayout>
 
 
 </FrameLayout>

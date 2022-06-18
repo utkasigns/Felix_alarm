@@ -93,6 +93,13 @@ public class WeatherActivity extends AppCompatActivity {
         btGifs = findViewById(R.id.btGifs);
         btImages = findViewById(R.id.btImages);
 
+        Intent intent = getIntent();
+        boolean isOpened = intent.getBooleanExtra("flag", true);
+        if (isOpened == true) {
+            Intent i = new Intent(getApplicationContext(), AlarmOnActivity.class);
+            startActivity(i);
+        }
+
 
         settingsImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -137,6 +144,7 @@ public class WeatherActivity extends AppCompatActivity {
                         switch (descriptionT) {
                             case "clear sky":
                                 gifBack.setImageResource(R.drawable.sunny_w);
+                                gifBack.setAlpha(0.5F);
                                 break;
                             case "few clouds": //серые тучки, но с солнышком кек
                             case "scattered clouds":  //серые тучки без грозы(без черых тучек)
@@ -235,11 +243,20 @@ public class WeatherActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_alarm:
-                        Intent intent = new Intent(getApplicationContext(), AlarmOnActivity.class);
+
+//                        Intent intent = new Intent(getApplicationContext(), AlarmOnActivity.class);
+//                        intent.putExtra("description", descriptionT);
+//                        intent.putExtra("theme", isThemeChanged);
+//                        startActivity(intent);
+//                        overridePendingTransition(0, 0);
+
+                        Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
                         intent.putExtra("description", descriptionT);
                         intent.putExtra("theme", isThemeChanged);
                         startActivity(intent);
                         overridePendingTransition(0, 0);
+
+
                         return true;
                     case R.id.nav_notes:
                         startActivity(new Intent(getApplicationContext(), NotesActivity.class));
