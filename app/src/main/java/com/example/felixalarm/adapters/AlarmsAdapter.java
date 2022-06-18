@@ -2,6 +2,9 @@ package com.example.felixalarm.adapters;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,41 +12,38 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+//import com.example.felixalarm.R;
+//import com.example.felixalarm.activities.Alarm;
 import com.example.felixalarm.R;
-import com.example.felixalarm.activities.Alarm;
 import com.example.felixalarm.activities.AlarmActivity;
 //import com.example.felixalarm.entities.Alarm;
+import com.example.felixalarm.entities.Alarm;
+import com.example.felixalarm.entities.Note;
 import com.example.felixalarm.listeners.AlarmsListener;
 
 import java.util.List;
 
 public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewHolder> {
+
    private List<Alarm> alarmList;
    private AlarmsListener alarmsListener;
    private Context context;
 
 
-    public AlarmsAdapter(List<Alarm> alarmList, AlarmActivity alarmActivity) {
+    public AlarmsAdapter(List<Alarm> alarmList, Context context) {
         this.alarmList=alarmList;
         this.context=context;
     }
 
-    @NonNull
-    @Override
-    public AlarmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.uniwersal_alarm,parent,false);
-        AlarmViewHolder holder=new AlarmViewHolder(view);
-        return holder;
-    }
 
     @Override
     public void onBindViewHolder(@NonNull AlarmViewHolder holder, int position) {
         holder.name.setText(alarmList.get(position).getName());
         holder.time.setText(alarmList.get(position).getTime());
-//        +":"+getMinute()
     }
 
     @Override
@@ -52,9 +52,8 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
     }
 
 
-    public  class AlarmViewHolder extends RecyclerView.ViewHolder {
-        private TextView time;
-        private TextView name;
+    public  class AlarmViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+        private TextView time, name;
         private Switch active;
 
         public AlarmViewHolder(View itemView) {
@@ -62,8 +61,24 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
             time = itemView.findViewById(R.id.alarmSettenTime);
             name = itemView.findViewById(R.id.alarmSettenName);
             active = itemView.findViewById(R.id.switchAlarm);
+            itemView.setOnClickListener(this);
 
         }
+
+        @Override
+        public void onClick(View v) {
+            if (alarmsListener!=null)
+                alarmsListener.onAlarmClicked(v,getAdapterPosition());
+
+        }
+    }
+    @NonNull
+    @Override
+    public AlarmViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view=LayoutInflater.from(parent.getContext()).inflate(R.layout.uniwersal_alarm,parent,false);
+        AlarmViewHolder holder=new AlarmViewHolder(view);
+        return holder;
+    }
 
 
 //    @Override
@@ -119,4 +134,4 @@ public class AlarmsAdapter extends RecyclerView.Adapter<AlarmsAdapter.AlarmViewH
 //        }
 //    }
 //
-    }}
+    }

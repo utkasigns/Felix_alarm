@@ -1,12 +1,15 @@
 package com.example.felixalarm.activities;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.nfc.Tag;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.util.Log;
@@ -17,53 +20,56 @@ import android.widget.ImageView;
 import com.example.felixalarm.R;
 import com.example.felixalarm.adapters.AlarmsAdapter;
 //import com.example.felixalarm.entities.Alarm;
+import com.example.felixalarm.database.AlarmsDatabase;
+import com.example.felixalarm.database.NotesDatabase;
+import com.example.felixalarm.entities.Alarm;
+import com.example.felixalarm.entities.Note;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
 
 public class AlarmActivity extends AppCompatActivity  {
     public static final int REQUEST_CODE_ADD_ALARM = 1;
     public static final int REQUEST_CODE_UPDATE_ALARM = 2;
     public static final int REQUEST_CODE_SHOW_ALARMS = 3;
+    private RecyclerView alarmRecyclerView;
 
-    LinearLayoutManager alarmManager;
-    AlarmsAdapter alarmsAdapter;
+
+    RecyclerView.LayoutManager alarmManager;
+    RecyclerView.Adapter alarmsAdapter;
     AlarmListApplication alarmListApplication= (AlarmListApplication) this.getApplication();
 
-    List<Alarm> alarmList=new ArrayList<Alarm>();
-    private static final String TAG="alarm app";
-
-    AlarmClock alarmClock;
-    int hours,minutes;
+    private List<Alarm> alarmList;
 
     private int alarmClickedPosition = -1;
-    private RecyclerView alarmRecyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_alarm);
-        fillAlarmList();
-        Log.d(TAG, "OnCreate:" +alarmList.toString());
-        alarmList=AlarmListApplication.getAlarmList();
 
+        alarmList=AlarmListApplication.getAlarmList();
 
         ImageView imageAddNewAlarm = findViewById(R.id.imageAddAlarm);
         imageAddNewAlarm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i= new Intent(AlarmActivity.this, CreateAlarmActivity.class);
-                startActivity(i);
-                ;}
+                startActivityForResult(
+                new Intent(AlarmActivity.this, CreateAlarmActivity.class),
+                REQUEST_CODE_ADD_ALARM);
+                }
 
             });
 
 
-        alarmRecyclerView=findViewById(R.id.alarmRecycleView);
+        alarmRecyclerView = findViewById(R.id.alarmRecycleView);
         alarmRecyclerView.setHasFixedSize(true);
 
         alarmManager= new LinearLayoutManager(this);
@@ -72,20 +78,6 @@ public class AlarmActivity extends AppCompatActivity  {
         alarmsAdapter=new AlarmsAdapter(alarmList,AlarmActivity.this);
         alarmRecyclerView.setAdapter(alarmsAdapter);
 
-
-//        AlarmsAdapter alarmsAdapter=new AlarmsAdapter(alarmList);
-//        alarmRecyclerView.setAdapter(alarmsAdapter);
-//        alarmRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
-
-
-
-
-//                Intent i=new Intent(getApplicationContext(), );
-//                 i.putExtra(AlarmClock.EXTRA_HOUR, hours);
-//                 i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-//                 i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-//                 startActivity(i);
 
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         bottomNavigationView.setSelectedItemId(R.id.nav_alarm);
@@ -109,11 +101,66 @@ public class AlarmActivity extends AppCompatActivity  {
             }
         });}
 
-    private void fillAlarmList() {
-        Alarm a1=new Alarm(1,"aaa","12:12");
-        Alarm a2=new Alarm(2,"ooo","13:12");
-        alarmList.addAll(Arrays.asList(new Alarm[]{a1,a2}));
+    public void onAlarmClicked(Alarm alarm, int position) {
+        alarmClickedPosition = position;
+        Intent intent = new Intent(getApplicationContext(),CreateAlarmActivity.class);
+        intent.putExtra("isViewOrUpdate", true);
+        intent.putExtra("alarm", alarm);
+        startActivityForResult(intent, REQUEST_CODE_UPDATE_ALARM);
     }
+
+
+    private void getAlarms(final int requestCode, final boolean isAlarmDeleted) {
+
+        @SuppressLint("StaticFieldLeak")
+        class GetAlarmTask extends AsyncTask<Void, Void, List<Alarm>> {
+
+            @Override
+            protected List<Alarm> doInBackground(Void... voids) {
+                return AlarmsDatabase
+                        .getDatabase(getApplicationContext())
+                        .alarmDao().getAllAlarms();
+            }
+
+            @Override
+            protected void onPostExecute(List<Alarm> alarms) {
+                super.onPostExecute(alarms);
+//                Log.d("MY_NOTES", notes.toString());
+                if (requestCode == REQUEST_CODE_SHOW_ALARMS ) {
+                    alarmList.addAll(alarms);
+                    alarmsAdapter.notifyDataSetChanged();
+                } else if (requestCode == REQUEST_CODE_ADD_ALARM) {
+                    alarmList.add(0, alarms.get(0));
+                    alarmsAdapter.notifyItemInserted(0);
+                    alarmRecyclerView.smoothScrollToPosition(0);
+                } else if (requestCode ==REQUEST_CODE_UPDATE_ALARM) {
+                    alarmList.remove(alarmClickedPosition);
+
+                    if (isAlarmDeleted) {
+                        alarmsAdapter.notifyItemRemoved(alarmClickedPosition);
+                    }else {
+                        alarmList.add(alarmClickedPosition, alarms.get(alarmClickedPosition));
+                        alarmsAdapter.notifyItemChanged(alarmClickedPosition);
+                    }
+                }
+            }
+
+        }
+        new GetAlarmTask().execute();
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == REQUEST_CODE_ADD_ALARM && resultCode == RESULT_OK) {
+            getAlarms(REQUEST_CODE_ADD_ALARM, false);
+        } else if (requestCode == REQUEST_CODE_UPDATE_ALARM&& resultCode == RESULT_OK) {
+            if (data != null) {
+                getAlarms(REQUEST_CODE_UPDATE_ALARM, data.getBooleanExtra("isNoteDeleted", false));
+            }
+        }
+    }
+
+
 }
 
 

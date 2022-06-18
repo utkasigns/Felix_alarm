@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -38,7 +38,9 @@
         app:itemIconTint="@drawable/item_selector"
         app:itemRippleColor="@android:color/transparent"
         app:labelVisibilityMode="unlabeled"
-        app:menu="@menu/bottom_menu" />
+        app:menu="@menu/bottom_menu"
+
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <!--Привет от Ани ;3      -->
 
@@ -48,39 +50,47 @@
         android:layout_width="@dimen/_70sdp"
         android:layout_height="@dimen/_55sdp"
         android:layout_alignTop="@id/textMyNotes"
-        android:layout_marginStart="300dp"
-        android:layout_marginTop="173dp"
-        android:layout_marginEnd="-10dp"
-        android:layout_marginBottom="@dimen/_10sdp"
+        android:layout_marginTop="169dp"
+        android:layout_marginEnd="36dp"
+        android:layout_marginBottom="66dp"
         android:background="@drawable/kitty_icon"
         android:contentDescription="@string/app_name"
         android:paddingStart="@dimen/_12sdp"
         android:paddingTop="@dimen/_12sdp"
         android:paddingEnd="@dimen/_12sdp"
+
         android:paddingBottom="@dimen/_4ssp"
         android:scaleType="fitCenter"
         android:src="@drawable/ic_add_outline"
-
-        app:tint="@color/orangeLight"/>
+        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMyNotes"
+        app:tint="@color/orangeLight" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="140dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="54dp"
+        android:layout_marginBottom="179dp"
         android:text="@string/What_time_is_it"
-        android:textSize="55dp" />
+        android:textSize="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmRecycleView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="300dp"
-        android:orientation="horizontal">
+        android:layout_marginBottom="16dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
     </androidx.recyclerview.widget.RecyclerView>
 
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

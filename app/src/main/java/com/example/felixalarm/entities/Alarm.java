@@ -1,6 +1,7 @@
 package com.example.felixalarm.entities;
 
 import android.text.Editable;
+import android.widget.EditText;
 
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
@@ -11,7 +12,7 @@ import com.example.felixalarm.activities.AlarmListApplication;
 import java.io.Serializable;
 @Entity(tableName = "alarms")
 
-public class Alarm implements Serializable {
+public class Alarm implements Serializable  {
     AlarmListApplication alarmListApplication;
 
 
@@ -51,6 +52,5 @@ public class Alarm implements Serializable {
     public void setId(int id) {
         this.id = id;
     }
-
 
 }

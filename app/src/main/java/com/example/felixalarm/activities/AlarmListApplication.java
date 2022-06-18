@@ -4,22 +4,16 @@ import android.app.Application;
 //
 //import com.example.felixalarm..Alarm;
 
+import com.example.felixalarm.entities.Alarm;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class AlarmListApplication extends Application {
-    public static int nextId=0;
+    public static int nextId=2;
     public static List<Alarm> alarmList= new ArrayList<>();
-//    public AlarmListApplication(){
-//        fillAlarmList();
-//    }
 
-//    private void fillAlarmList() {
-//        Alarm a1=new Alarm(1,"aaa","12:12");
-//        Alarm a2=new Alarm(2,"ooo","13:12");
-//        alarmList.addAll(Arrays.asList(new Alarm[]{a1,a2}));
-//    }
 
     public static int getNextId() {
         return nextId;

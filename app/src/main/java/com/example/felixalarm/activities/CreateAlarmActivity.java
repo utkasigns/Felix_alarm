@@ -2,6 +2,7 @@ package com.example.felixalarm.activities;
 
 import static com.example.felixalarm.activities.AlarmListApplication.nextId;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.TimePickerDialog;
@@ -20,6 +21,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.felixalarm.R;
+import com.example.felixalarm.entities.Alarm;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -112,15 +114,31 @@ public class CreateAlarmActivity extends AppCompatActivity {
         });
         alarmName = findViewById(R.id.alarmName);
         alarmSave = findViewById(R.id.alarmSave);
+
+
+//
+//        alarmSave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String name = alarmName.getText().toString();
+//                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
+//                startActivity(i);
+//            }
+//        });
+
+        alarmName = findViewById(R.id.alarmName);
         alarmSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 //создаем будильник
-                int nextId = AlarmListApplication.getNextId();
-                Alarm newAlarm = new Alarm(nextId,
-                        alarmName.getText().toString(),
+                 int nextId = AlarmListApplication.getNextId();
+                 final Alarm newAlarm = new Alarm(nextId,
+                         alarmName.getText().toString(),
                         timer1.getText().toString());
+                newAlarm.setId(nextId);
+                newAlarm.setTime(timer1.getText().toString());
+                newAlarm.setName(alarmName.getText().toString());
 
 
                 //добавляем будильник в глобальный список
@@ -128,6 +146,8 @@ public class CreateAlarmActivity extends AppCompatActivity {
                 alarmList.add(newAlarm);
                 ++nextId;
                 AlarmListApplication.setNextId(nextId);
+
+
                 if (alarmName == null) {
                     Toast.makeText(CreateAlarmActivity.this, "Alarm must have name!", Toast.LENGTH_LONG).show();
                     return;
@@ -136,41 +156,13 @@ public class CreateAlarmActivity extends AppCompatActivity {
                     return;
                 }
 
-//                final Alarm alarm=new Alarm(nextId, alarmName.getText().toString(), timer1.getText().toString());
-//                alarm.setName(alarmName.getText().toString());
-//                alarm.setTime(timer1.getText().toString());
-//                saveAlarm();
             }
         });
 
-
-        alarmSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String name = alarmName.getText().toString();
-                Intent i = new Intent(CreateAlarmActivity.this, AlarmActivity.class);
-                startActivity(i);
-            }
-            //...............................................
-            //тут мне нужно как раз таки передать данные чтобы они сохранялись
-//                    i.putExtra(AlarmClock.EXTRA_HOUR, hours);
-//                    i.putExtra(AlarmClock.EXTRA_MINUTES, minutes);
-//                    i.putExtra(AlarmClock.EXTRA_SKIP_UI, true);
-//            }
-            //.....................................................................................
-        });
-
-        alarmName = findViewById(R.id.alarmName);
-
-
-//}
-//    private void saveAlarm() {
-//
-//
-//
-//    }
     }
 
+
+    @SuppressLint("UnspecifiedImmutableFlag")
     private PendingIntent getAlarmInfoPendingIntend() {
         Intent alarmInfoIntend = new Intent(this, AlarmActivity.class);
         alarmInfoIntend.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
