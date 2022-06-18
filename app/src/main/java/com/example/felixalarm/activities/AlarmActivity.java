@@ -43,12 +43,9 @@ public class AlarmActivity extends AppCompatActivity  {
 
     RecyclerView.LayoutManager alarmManager;
     RecyclerView.Adapter alarmsAdapter;
-    AlarmListApplication alarmListApplication= (AlarmListApplication) this.getApplication();
-
+//    AlarmListApplication alarmListApplication= (AlarmListApplication) this.getApplication();
     private List<Alarm> alarmList;
-
     private int alarmClickedPosition = -1;
-
     TextClock currentTime;
 
     @Override
