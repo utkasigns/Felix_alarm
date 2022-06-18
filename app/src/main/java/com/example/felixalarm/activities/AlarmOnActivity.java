@@ -18,6 +18,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.felixalarm.R;
 
+import java.util.Random;
+
 import pl.droidsonroids.gif.GifImageView;
 
 public class AlarmOnActivity extends AppCompatActivity {
@@ -40,7 +42,7 @@ public class AlarmOnActivity extends AppCompatActivity {
         String description = intent.getStringExtra("description");
         boolean isThemeChanged = intent.getBooleanExtra("theme", false);
 
-        if (isThemeChanged && description != null) {
+        if (description != null) {
 
             if (isThemeChanged == false) {
                 gifBack.setAlpha(0.35F);
@@ -72,7 +74,7 @@ public class AlarmOnActivity extends AppCompatActivity {
                         buttonAlarmOff.setImageResource(R.drawable.button_rain);
                         break;
                 }
-            } else{
+            } else if (isThemeChanged == true){
                 gifBack.setAlpha(0.9F);
                 switch (description) {
                     case "clear sky":
@@ -124,7 +126,76 @@ public class AlarmOnActivity extends AppCompatActivity {
 
                         Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_translate);
                         buttonAlarmOff.startAnimation(anim);
-//                        buttonAlarmOff.
+
+                        Random random = new Random();
+                        int num = 10;
+
+                        switch(random.nextInt(num)) {
+                            case 0:
+                                float x = 700;
+                                float y = 400;
+                                buttonAlarmOff.setX((float) x);
+                                buttonAlarmOff.setY((float) y);
+                                break;
+                            case 1:
+                                float x2 = 500;
+                                float y2 = 700;
+                                buttonAlarmOff.setX((float) x2);
+                                buttonAlarmOff.setY((float) y2);
+                                break;
+                            case 2:
+                                float x3 = 300;
+                                float y3 = 1000;
+                                buttonAlarmOff.setX((float) x3);
+                                buttonAlarmOff.setY((float) y3);
+                                break;
+                            case 3:
+                                float x4 = 400;
+                                float y4 = 900;
+                                buttonAlarmOff.setX((float) x4);
+                                buttonAlarmOff.setY((float) y4);
+                                break;
+                            case 4:
+                                float x5 = 100;
+                                float y5 = 500;
+                                buttonAlarmOff.setX((float) x5);
+                                buttonAlarmOff.setY((float) y5);
+                                break;
+                            case 5:
+                                float x6 = 300;
+                                float y6 = 500;
+                                buttonAlarmOff.setX((float) x6);
+                                buttonAlarmOff.setY((float) y6);
+                                break;
+                            case 6:
+                                float x7 = 800;
+                                float y7 = 1100;
+                                buttonAlarmOff.setX((float) x7);
+                                buttonAlarmOff.setY((float) y7);
+                                break;
+                            case 7:
+                                float x8 = 600;
+                                float y8 = 600;
+                                buttonAlarmOff.setX((float) x8);
+                                buttonAlarmOff.setY((float) y8);
+                                break;
+                            case 8:
+                                float x9 = 400;
+                                float y9 = 800;
+                                buttonAlarmOff.setX((float) x9);
+                                buttonAlarmOff.setY((float) y9);
+                                break;
+                            case 9:
+                                float x10 = 100;
+                                float y10 = 1100;
+                                buttonAlarmOff.setX((float) x10);
+                                buttonAlarmOff.setY((float) y10);
+                                break;
+
+                        }
+
+                        Animation anim2 = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_translate2);
+                        buttonAlarmOff.startAnimation(anim2);
 
                     } else {
                         ringtone.stop();
@@ -132,56 +203,8 @@ public class AlarmOnActivity extends AppCompatActivity {
                         startActivity(i);
 
                     }
-//
-//                    Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_translate);
-//                    buttonAlarmOff.startAnimation(anim);
-
-
-//                    int count = 0;
-////
-//                    do {
-//                        count++;
-//                        Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_translate);
-//                        buttonAlarmOff.startAnimation(anim);
-//
-//                    } while (count == 10);
-//
-//                    if (count == 10) {
-//                        ringtone.stop();
-//                        Intent i = new Intent(AlarmOnActivity.this, AlarmActivity.class);
-//                        startActivity(i);
-//                    }
-
-
-//                if (count < 5) {
-//                    count++;
-//
-////                    float fromXdelta = (float) Math.random();
-////                    float toXdelta = (float) Math.random();
-////                    float fromYdelta = (float) Math.random();
-////                    float toYdelta = (float) Math.random();
-////
-////                    TranslateAnimation animation = new TranslateAnimation(fromXdelta,toXdelta,fromYdelta,toYdelta);
-////                    buttonAlarmOff.startAnimation(animation);
-//
-//                    Animation anim=AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_translate);
-//                    buttonAlarmOff.startAnimation(anim);
-//
-//                } else {
-//                    ringtone.stop();
-//                    Intent i= new Intent(AlarmOnActivity.this,AlarmActivity.class);
-//                    startActivity(i);
-//                }
                 }
             });
-
-//        } while (count==10);
-
-//        ringtone.stop();
-//        Intent i= new Intent(AlarmOnActivity.this,AlarmActivity.class);
-//        startActivity(i);
-
-
 
     }
 }

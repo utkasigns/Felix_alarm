@@ -48,7 +48,7 @@ public class AlarmActivity extends AppCompatActivity  {
     private List<Alarm> alarmList;
     private int alarmClickedPosition = -1;
     TextClock currentTime;
-    boolean isOpened = false;
+    boolean isOpened;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,11 +66,11 @@ public class AlarmActivity extends AppCompatActivity  {
             @Override
             public void onClick(View v) {
 
-                //метод по срабатыванию будильника должен быть
+                //метод по срабатыванию будильника должен быть!
+                isOpened = true;
                 Intent intent1 = new Intent(getApplicationContext(), AlarmOnActivity.class);
                 intent1.putExtra("description", descriptionT);
                 intent1.putExtra("theme", isThemeChanged);
-                isOpened = true;
                 startActivity(intent1);
 
             }

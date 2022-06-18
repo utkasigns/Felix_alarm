@@ -65,7 +65,7 @@ public class WeatherActivity extends AppCompatActivity {
     private WeatherAdapter weatherAdapter;
 
     String descriptionT;
-    boolean isThemeChanged;
+    boolean isThemeChanged = false;
 
     private final String url = "https://api.openweathermap.org/data/2.5/weather";
     private final String appid = "d2d4dc6c3e99f743a99857ee56a2e875";
@@ -94,7 +94,7 @@ public class WeatherActivity extends AppCompatActivity {
         btImages = findViewById(R.id.btImages);
 
         Intent intent = getIntent();
-        boolean isOpened = intent.getBooleanExtra("flag", true);
+        boolean isOpened = intent.getBooleanExtra("flag", false);
         if (isOpened == true) {
             Intent i = new Intent(getApplicationContext(), AlarmOnActivity.class);
             startActivity(i);
@@ -243,12 +243,6 @@ public class WeatherActivity extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.nav_alarm:
-
-//                        Intent intent = new Intent(getApplicationContext(), AlarmOnActivity.class);
-//                        intent.putExtra("description", descriptionT);
-//                        intent.putExtra("theme", isThemeChanged);
-//                        startActivity(intent);
-//                        overridePendingTransition(0, 0);
 
                         Intent intent = new Intent(getApplicationContext(), AlarmActivity.class);
                         intent.putExtra("description", descriptionT);

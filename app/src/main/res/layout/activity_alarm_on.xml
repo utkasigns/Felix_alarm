@@ -40,13 +40,12 @@
 
         <ImageView
             android:id="@+id/button_alarm_off"
-            android:layout_width="137dp"
-            android:layout_height="136dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
             android:layout_alignParentBottom="true"
             android:layout_centerInParent="true"
             android:layout_marginBottom="200dp"
-            android:src="@drawable/button_rain"
-            />
+            android:src="@drawable/button_rain" />
 
     </RelativeLayout>
 
