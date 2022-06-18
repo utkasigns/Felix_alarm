@@ -19,6 +19,12 @@ public class Alarm implements Serializable  {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    @ColumnInfo(name = "name")
+    private String name;
+
+    @ColumnInfo(name = "time")
+    private String time  ;
+
     public Alarm(int nextId, String toString, String toString1) {
     }
 
@@ -30,8 +36,7 @@ public class Alarm implements Serializable  {
         this.name = name;
     }
 
-    @ColumnInfo(name = "name")
-    private String name;
+
 
     public String getTime() {
         return time;
@@ -41,8 +46,6 @@ public class Alarm implements Serializable  {
         this.time = time;
     }
 
-    @ColumnInfo(name = "time")
-    private String time  ;
 
 
     public int getId() {
