@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/_20sdp"
         android:layout_marginBottom="24dp"
         android:background="@color/white"
         android:fontFamily="@font/ubuntu_bold"
@@ -20,6 +20,7 @@
         android:text="@string/my_alarm"
         android:textColor="@color/orange"
         android:textSize="@dimen/_20ssp"
+        app:layout_constraintBottom_toTopOf="@+id/textClock"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -53,7 +54,7 @@
         android:layout_alignTop="@id/textMyNotes"
         android:layout_marginTop="83dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="140dp"
+        android:layout_marginBottom="40dp"
         android:background="@drawable/kitty_icon"
         android:contentDescription="@string/app_name"
         android:paddingStart="@dimen/_12sdp"
@@ -68,42 +69,33 @@
         app:layout_constraintTop_toBottomOf="@+id/textMyNotes"
         app:tint="@color/orangeLight" />
 
-
     <TextClock
         android:id="@+id/textClock"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="72dp"
+        android:layout_marginBottom="197dp"
         android:text="@string/What_time_is_it"
-        android:textSize="55sp"
-        app:layout_constraintTop_toTopOf="@id/imageAddAlarm"
-        app:layout_constraintStart_toStartOf="@id/textMyNotes"
-
-            />
-
-    <!--    <TextView-->
-<!--        android:id="@+id/textView"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginStart="16dp"-->
-<!--        android:layout_marginTop="24dp"-->
-<!--        android:layout_marginEnd="72dp"-->
-<!--        android:layout_marginBottom="197dp"-->
-<!--        android:text="@string/What_time_is_it"-->
-<!--        android:textSize="55dp"-->
-<!--        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"-->
-<!--        app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />-->
+        android:textSize="55dp"
+        app:layout_constraintBottom_toTopOf="@+id/alarmRecycleView"
+        app:layout_constraintEnd_toStartOf="@+id/imageAddAlarm"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textMyNotes" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/alarmRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
-        android:orientation="horizontal"
+        android:layout_height="0dp"
+        android:layout_marginStart="@dimen/_2sdp"
+        android:layout_marginEnd="@dimen/_2sdp"
+        android:layout_marginBottom="20dp"
+        android:clipToPadding="false"
+        android:paddingStart="0dp"
+        android:paddingEnd="@dimen/_12sdp"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigation"
-        tools:layout_editor_absoluteX="-15dp"
-        >
+        tools:layout_editor_absoluteX="41dp">
 
     </androidx.recyclerview.widget.RecyclerView>
 
