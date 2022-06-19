@@ -31,6 +31,7 @@ public class AlarmOnActivity extends AppCompatActivity {
     TextView textTime;
     int count = 0;
     TextClock currentTime;
+    boolean openedNotes = false;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -208,8 +209,9 @@ public class AlarmOnActivity extends AppCompatActivity {
                         ringtone.stop();
 
 
+                        openedNotes = true;
                         Intent i = new Intent(AlarmOnActivity.this, NotesActivity.class);
-                        setContentView(R.layout.activity_notes);
+                        i.putExtra("openedNotes",openedNotes);
 
                         String text = "It's your notes! Don't forget to read them!";
                         Toast.makeText(AlarmOnActivity.this, text, Toast.LENGTH_LONG).show();

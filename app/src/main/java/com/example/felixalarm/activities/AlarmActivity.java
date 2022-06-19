@@ -86,8 +86,8 @@ public class AlarmActivity extends AppCompatActivity  {
             }
         },0,1000);
 
-        TextView textMyNotes = findViewById(R.id.textMyNotes);
-//        textMyNotes.setOnClickListener(new View.OnClickListener() {
+//        TextView textMyAlarm = findViewById(R.id.textMyAlarm);
+//        textMyAlarm.setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //

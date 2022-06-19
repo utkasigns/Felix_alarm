@@ -15,6 +15,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -38,7 +39,6 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
     private RecyclerView notesRecyclerView;
     private List<Note> noteList;
     private NotesAdapter notesAdapter;
-    
 
     private int noteClickedPosition = -1;
     int notesAmount;
@@ -56,6 +56,20 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
 
         Intent i = getIntent();
         boolean isOpened = i.getBooleanExtra("flag", false);
+        boolean openedNotes = i.getBooleanExtra("openedNotes", false);
+
+        if (openedNotes == true) {
+            findViewById(R.id.layoutPopUpWindowNotes).setVisibility(View.VISIBLE);
+
+            findViewById(R.id.btIGotIt).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    findViewById(R.id.layoutPopUpWindowNotes).setVisibility(View.GONE);
+                }
+            });
+
+
+        }
 
 
         ImageView imageAddNoteMain = findViewById(R.id.imageAddNoteMain);
@@ -128,22 +142,22 @@ public class NotesActivity extends AppCompatActivity implements NotesListener {
 
 
         if (isOpened == true) {
-            notesAmount = noteList.size();
-            Log.i("notesA" , String.valueOf(noteList.size()));
+//            notesAmount = noteList.size();
+//            Log.i("notesA" , String.valueOf(noteList.size()));
 
             Intent i2 = new Intent(getApplicationContext(), AlarmOnActivity.class);
-            i2.putExtra("size", notesAmount);
+//            i2.putExtra("size", notesAmount);
             startActivity(i2);
         }
     }
-    public int checkNotes(boolean isOpened) {
-
-        if (isOpened == true) {
-            notesAmount = noteList.size();
-        }
-        return notesAmount;
-
-    }
+//    public int checkNotes(boolean isOpened) {
+//
+//        if (isOpened == true) {
+//            notesAmount = noteList.size();
+//        }
+//        return notesAmount;
+//
+//    }
 
     @Override
     public void onNoteClicked(Note note, int position) {

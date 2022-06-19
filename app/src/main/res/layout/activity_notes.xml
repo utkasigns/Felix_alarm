@@ -144,5 +144,21 @@
 <!--    #FFBE3B желтенький-->
 <!--    Аня, привет :3-->
 
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+    <include
+        android:id="@+id/layoutPopUpWindowNotes"
+        layout="@layout/popup_window_notes"
+        android:visibility="gone" />
+
+    </RelativeLayout>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
